@@ -17,8 +17,8 @@
         ```
     2. Create and fire up your virtual environment:
         ```bash
-            $ virtualenv  venv -p python3
-            $ source venv/bin/activate
+            $ virtualenv  env -p python3
+            $ source env/bin/activate
         ```
     3. Install the dependencies needed to run the app:
         ```bash
@@ -30,10 +30,16 @@
             $ python manage.py migrate
             $ python manage.py createsuperuser
         ```
-    5. Run It
+    5. Run It With Postgres - First configure your postgresql connections in settings_postgres.py file
     ```bash
-        $ python manage.py runserver
+        $ python manage.py runserver --settings=project.settings_postgres
     ```
+    5b Run it with SQLite
+    ```bash
+        $ python manage.py runserver --settings=project.settings_sqlite
+    ```
+	
+
     6. Test it Locally
    
         http://localhost:8000/users/
