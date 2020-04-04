@@ -35,7 +35,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         #'rest_framework.authentication.BasicAuthentication',
         #'rest_framework.authentication.TokenAuthentication',
-    )
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10
 }
 
 # Application definition
@@ -85,7 +87,7 @@ WSGI_APPLICATION = 'project.wsgi_postgres.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -96,6 +98,18 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+"""
+# DOCKERIZED
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432,
+    }
+}
+
 
 
 # Password validation
@@ -135,3 +149,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+SUPER_USER = {
+    'username': 'admin',
+    'email':'admin@admin.com',
+    'password':'admin',
+}
