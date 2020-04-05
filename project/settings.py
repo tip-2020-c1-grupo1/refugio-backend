@@ -40,7 +40,19 @@ DATABASES = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+
+"""
+REQUERED FOR https://vxlabs.com/2015/12/08/gunicorn-as-your-django-development-server/
+SETUP GUNICORN + DJ-STATIC 
+
+ALSO CHECK: https://github.com/heroku-python/dj-static
+
+TODO: WHITENOISE INTEGRATION
+"""
+STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
+MEDIA_ROOT = 'media'
+MEDIA_URL = '/media/'
 
 SUPER_USER = {
     'username': 'admin',
@@ -48,5 +60,4 @@ SUPER_USER = {
     'password':'admin',
 }
 
-STATIC_URL = '/static/'
 django_heroku.settings(locals())

@@ -1,5 +1,5 @@
 from rest_framework.permissions import BasePermission
-from .models import Bucketlist
+from .models import Animal
 
 
 class IsOwner(BasePermission):
@@ -7,6 +7,6 @@ class IsOwner(BasePermission):
 
     def has_object_permission(self, request, view, obj):
         """Return True if permission is granted to the bucketlist owner."""
-        if isinstance(obj, Bucketlist):
+        if isinstance(obj, Animal):
             return obj.owner == request.user
         return obj.owner == request.user

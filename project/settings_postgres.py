@@ -39,8 +39,21 @@ DATABASES = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_URL = '/static/'
+"""
+REQUERED FOR https://vxlabs.com/2015/12/08/gunicorn-as-your-django-development-server/
+SETUP GUNICORN + DJ-STATIC 
 
+ALSO CHECK: https://github.com/heroku-python/dj-static
+
+TODO: WHITENOISE INTEGRATION
+"""
+STATIC_ROOT = 'staticfiles'
+STATIC_URL = '/static/'
+MEDIA_ROOT = 'media'
+MEDIA_URL = '/media/'
+
+
+# TODO: CHECK THIS
 SUPER_USER = {
     'username': 'admin',
     'email':'admin@admin.com',
