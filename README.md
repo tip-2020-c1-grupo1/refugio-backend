@@ -42,11 +42,14 @@
 
     6. Test it Locally
    
-        http://localhost:8000/users/
+        http://localhost:8000/api/users/
   
 Check with curl:
 
-curl 'http://localhost:8000/users/' -H 'Accept: application/json'
+curl 'http://localhost:8000/api/users/' -H 'Accept: application/json'
+
+ALSO CHECK SWAGGER:
+http://localhost:8000/docs/
 
 
 // TODO
@@ -63,7 +66,7 @@ curl 'http://localhost:8000/users/' -H 'Accept: application/json'
     
     Your project should now be live at: 
     
-    https://'heroku_project_name'.herokuapp.com/users/
+    https://'heroku_project_name'.herokuapp.com/api/users/
  
 
 DOCKER CONFIGURATION
