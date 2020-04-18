@@ -25,7 +25,6 @@ class AnimalSerializer(serializers.ModelSerializer):
     """Serializer to map the model instance into json format."""
 
     owner = serializers.ReadOnlyField(source='owner.username')
-    #images = ImageSerializerSimple(source='imageanimal_set', many=True, read_only=True)
     images = ImageSerializerSimple(many=True, required=False)
 
     class Meta:
