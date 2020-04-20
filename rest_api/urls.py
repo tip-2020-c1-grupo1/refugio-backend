@@ -6,7 +6,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework import routers, renderers
 
 router = routers.DefaultRouter()
-router.register(r'animals', AnimalViewSet)
+router.register(r'animals', AnimalViewSet, basename='Animal')
 
 
 urlpatterns = [
