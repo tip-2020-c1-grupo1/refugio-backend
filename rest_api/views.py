@@ -1,8 +1,8 @@
-from rest_framework import generics, permissions, viewsets
-from .permissions import IsOwner
-from .serializers import UserSerializer, AnimalSerializer
-from .models import Animal
 from django.contrib.auth.models import User
+from rest_framework import generics, viewsets
+
+from .models import Animal, ImageAnimal
+from .serializers import UserSerializer, AnimalSerializer, ImageSerializerSimple
 
 
 class UserView(generics.ListAPIView):
@@ -23,7 +23,7 @@ class AnimalViewSet(viewsets.ModelViewSet):
     """
     # queryset = Animal.objects.all()
     serializer_class = AnimalSerializer
-    
+
     def get_queryset(self):
         """
         Optionally restricts the returned purchases to a given user,
@@ -34,3 +34,8 @@ class AnimalViewSet(viewsets.ModelViewSet):
         if name is not None:
             queryset = queryset.filter(name__icontains=name)
         return queryset
+
+class ImageAnimalViewSet(generics.RetrieveUpdateDestroyAPIView):
+
+    queryset = ImageAnimal.objects.all()
+    serializer_class = ImageSerializerSimple
