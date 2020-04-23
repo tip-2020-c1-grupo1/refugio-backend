@@ -31,7 +31,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'HOST': 'db',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
         'PORT': 5432,
     }
 }
@@ -43,7 +44,7 @@ DATABASES = {
 
 """
 REQUERED FOR https://vxlabs.com/2015/12/08/gunicorn-as-your-django-development-server/
-SETUP GUNICORN + DJ-STATIC 
+SETUP GUNICORN + DJ-STATIC
 
 ALSO CHECK: https://github.com/heroku-python/dj-static
 
@@ -51,7 +52,7 @@ TODO: WHITENOISE INTEGRATION
 """
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
-MEDIA_ROOT = 'media'
+MEDIA_ROOT  = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 SUPER_USER = {

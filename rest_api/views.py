@@ -5,7 +5,12 @@ from .permissions import IsOwner
 from .serializers import UserSerializer, AnimalSerializer
 from .models import Animal
 from django.contrib.auth.models import User
+from rest_framework import generics, viewsets
+from .models import Animal, ImageAnimal
+from .serializers import UserSerializer, AnimalSerializer, ImageSerializerSimple
+from django.core.cache import cache
 
+REDIRECTS_KEY = "animals.all"
 
 class UserView(generics.ListAPIView):
     """View to list the user queryset."""
@@ -18,41 +23,6 @@ class UserDetailsView(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-
-"""
-@cache_page(None)
-def get_elem(request):
-    key = request.GET.get('key')
-    if key:
-        redirects = cache.get(REDIRECTS_KEY)
-        if not redirects:
-            redirects = Redirect.objects.active()
-            cache.set(REDIRECTS_KEY, redirects)
-        else:
-            logger.info('Using cached objects')
-        redirect_filtered = redirects.filter(key=key)
-        if redirect_filtered.exists():
-            redirect_pretty = redirect_filtered.first().pretty_print()
-            return JsonResponse(redirect_pretty)
-        return JsonResponse({'Error': 'There is not object for ' + str(key) })
-    return JsonResponse({'Error': 'Please insert the key queryparam'})
-
-"""
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
-from django.core.cache import cache
-
-REDIRECTS_KEY = "animals.all"
-
-import logging
-
-# Get an instance of a logger
-logger = logging.getLogger(__name__)
-
-class AnimalViewSet(viewsets.ViewSet):
-    """
-    A simple ViewSet for listing or retrieving animals.
-    """    
     @method_decorator(cache_page(None))
     def list(self, request, format=None):
         data = cache.get(REDIRECTS_KEY)
@@ -76,3 +46,10 @@ class AnimalViewSet(viewsets.ViewSet):
         animal = get_object_or_404(data, pk=pk)
         serializer = AnimalSerializer(animal)
         return Response(serializer.data)
+    # queryset = Animal.objects.all()
+    serializer_class = AnimalSerializer
+
+class ImageAnimalViewSet(generics.RetrieveUpdateDestroyAPIView):
+
+    queryset = ImageAnimal.objects.all()
+    serializer_class = ImageSerializerSimple
