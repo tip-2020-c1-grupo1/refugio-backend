@@ -299,3 +299,5 @@ fabric.properties
 
 #VSCODE
 .vscode
+
+db.sqlite3-2

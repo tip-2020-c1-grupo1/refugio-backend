@@ -9,6 +9,8 @@ from rest_framework import generics, viewsets
 from .models import Animal, ImageAnimal
 from .serializers import UserSerializer, AnimalSerializer, ImageSerializerSimple
 from django.core.cache import cache
+from django.utils.decorators import method_decorator	
+from django.views.decorators.cache import cache_page
 
 REDIRECTS_KEY = "animals.all"
 
@@ -23,6 +25,10 @@ class UserDetailsView(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+class AnimalViewSet(viewsets.ViewSet):
+    """
+    A simple ViewSet for listing or retrieving animals.
+    """    
     @method_decorator(cache_page(None))
     def list(self, request, format=None):
         data = cache.get(REDIRECTS_KEY)
@@ -46,8 +52,6 @@ class UserDetailsView(generics.RetrieveAPIView):
         animal = get_object_or_404(data, pk=pk)
         serializer = AnimalSerializer(animal)
         return Response(serializer.data)
-    # queryset = Animal.objects.all()
-    serializer_class = AnimalSerializer
 
 class ImageAnimalViewSet(generics.RetrieveUpdateDestroyAPIView):
 
