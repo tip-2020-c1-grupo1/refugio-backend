@@ -8,5 +8,8 @@ urlpatterns = [
     path('docs/', schema_view),
     path('admin/', admin.site.urls),
     path('api/', include('rest_api.urls')),
+    path('watchman/', include('watchman.urls')),
+
+    
     # path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

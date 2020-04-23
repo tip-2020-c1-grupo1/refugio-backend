@@ -1,4 +1,6 @@
 from rest_framework import generics, permissions, viewsets
+from django.shortcuts import get_object_or_404
+from rest_framework.response import Response
 from .permissions import IsOwner
 from .serializers import UserSerializer, AnimalSerializer
 from .models import Animal
@@ -17,20 +19,60 @@ class UserDetailsView(generics.RetrieveAPIView):
     serializer_class = UserSerializer
 
 
-class AnimalViewSet(viewsets.ModelViewSet):
+"""
+@cache_page(None)
+def get_elem(request):
+    key = request.GET.get('key')
+    if key:
+        redirects = cache.get(REDIRECTS_KEY)
+        if not redirects:
+            redirects = Redirect.objects.active()
+            cache.set(REDIRECTS_KEY, redirects)
+        else:
+            logger.info('Using cached objects')
+        redirect_filtered = redirects.filter(key=key)
+        if redirect_filtered.exists():
+            redirect_pretty = redirect_filtered.first().pretty_print()
+            return JsonResponse(redirect_pretty)
+        return JsonResponse({'Error': 'There is not object for ' + str(key) })
+    return JsonResponse({'Error': 'Please insert the key queryparam'})
+
+"""
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
+
+REDIRECTS_KEY = "animals.all"
+
+import logging
+
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
+
+class AnimalViewSet(viewsets.ViewSet):
     """
-    A viewset that provides the standard actions
-    """
-    # queryset = Animal.objects.all()
-    serializer_class = AnimalSerializer
-    
-    def get_queryset(self):
-        """
-        Optionally restricts the returned purchases to a given user,
-        by filtering against a `username` query parameter in the URL.
-        """
-        queryset = Animal.objects.all()
+    A simple ViewSet for listing or retrieving animals.
+    """    
+    @method_decorator(cache_page(None))
+    def list(self, request, format=None):
+        data = cache.get(REDIRECTS_KEY)
+        if not data:
+            data = Animal.objects.all()
+            cache.set(REDIRECTS_KEY, data)
+            print('Caching objects now')
+        else:
+            print('With Cached objects')
         name = self.request.query_params.get('name', None)
         if name is not None:
-            queryset = queryset.filter(name__icontains=name)
-        return queryset
+            data = data.filter(name__icontains=name)
+        serializer = AnimalSerializer(data, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        data = cache.get(REDIRECTS_KEY)
+        if not data:
+            data = Animal.objects.all()
+            cache.set(REDIRECTS_KEY, data)
+        animal = get_object_or_404(data, pk=pk)
+        serializer = AnimalSerializer(animal)
+        return Response(serializer.data)
