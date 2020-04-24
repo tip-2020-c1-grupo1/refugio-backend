@@ -6,15 +6,6 @@ from django.db.models.signals import post_save
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 
-from django.core.cache import cache
-
-REDIRECTS_KEY = "animals.all"
-
-import logging
-
-# Get an instance of a logger
-logger = logging.getLogger(__name__)
-
 # This receiver handles token creation when a new user is created.
 @receiver(post_save, sender=User)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
@@ -42,8 +33,3 @@ class ImageAnimal(models.Model):
                                related_name='images',
                                on_delete=models.CASCADE, blank=True, null=True)
     image = models.ImageField(blank=True, null=True)
-
-@receiver(post_save, sender=Animal)
-def create_animal(sender, instance, created, **kwargs):
-    print('Preparing to save into cache')
-    print(cache.get(REDIRECTS_KEY))
