@@ -43,6 +43,9 @@
     6. Test it Locally
    
         http://localhost:8000/api/users/
+	
+    7. Load some data
+       python manage.py loaddata fixture/rest_api.json
   
 Check with curl:
 
