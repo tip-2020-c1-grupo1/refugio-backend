@@ -5,7 +5,7 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
-
+from rest_api.managers import AnimalManager
 
 # This receiver handles token creation when a new user is created.
 @receiver(post_save, sender=User)
@@ -18,18 +18,19 @@ class Animal(models.Model):
     """This class represents the Animals model."""
     name = models.CharField(max_length=255, blank=False, unique=True)
     species = models.CharField(max_length=255, blank=False)
-    description = models.TextField(blank=True, null=True) 
+    description = models.TextField(blank=True, null=True)
+    race = models.TextField(blank=True, null=True)
+    gender = models.CharField(max_length=255, blank=False, null=True)
     owner = models.ForeignKey(
         'auth.User',
         related_name='animals',
-        on_delete=models.CASCADE, blank=True,null=True)
+        on_delete=models.CASCADE, blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
-    
+    objects = AnimalManager()
 
 class ImageAnimal(models.Model):
     animal = models.ForeignKey(Animal,
-        related_name='images',
-        on_delete=models.CASCADE, blank=True,null=True)
+                               related_name='images',
+                               on_delete=models.CASCADE, blank=True, null=True)
     image = models.ImageField(blank=True, null=True)
-

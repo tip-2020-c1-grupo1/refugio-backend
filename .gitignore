@@ -106,7 +106,7 @@ results/
 __pycache__/
 local_settings.py
 db.sqlite3
-media
+#media
 
 
 ### Django.Python Stack ###
@@ -299,3 +299,5 @@ fabric.properties
 
 #VSCODE
 .vscode
+
+db.sqlite3-2

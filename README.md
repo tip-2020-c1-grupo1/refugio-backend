@@ -38,11 +38,16 @@
     ```bash
         $ python manage.py runserver --settings=project.settings_sqlite
     ```
+	   
 	
-
-    6. Test it Locally
+    6. Load some data
+    	```bash
+            $ python manage.py loaddata fixture/rest_api.json
+        ```
+    7. Test it Locally
    
         http://localhost:8000/api/users/
+	
   
 Check with curl:
 
