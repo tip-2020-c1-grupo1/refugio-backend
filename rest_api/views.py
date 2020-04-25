@@ -8,6 +8,7 @@ from rest_framework import generics, viewsets
 from .models import Animal, ImageAnimal
 from .serializers import UserSerializer, AnimalSerializer, ImageSerializerSimple
 
+
 class UserView(generics.ListAPIView):
     """View to list the user queryset."""
     queryset = User.objects.all()
@@ -26,11 +27,32 @@ class AnimalViewSet(viewsets.ModelViewSet):
     serializer_class = AnimalSerializer
     
     def get_queryset(self):
-        queryset = Animal.objects.all()
-        name = self.request.query_params.get('name', None)
-        if name is not None:
-            queryset = queryset.filter(name__icontains=name)
-        return queryset
+        search = self.request.query_params.get('search', None)
+        filter_elem = self.request.query_params.get('filter', None)
+        filters = filter_elem.split('_')
+        
+        if 'name' in filters and 'race' not in filters and 'species' not in filters and search is not None:
+            return Animal.objects.search_only_name(search)
+            
+        elif 'race' in filters and 'name' not in filters and 'species' not in filters and search is not None:
+            return Animal.objects.search_only_race(search)
+            
+        elif 'species' in filters and 'race' not in filters and 'name' not in filters and search is not None:
+            return Animal.objects.search_only_species(search)
+        
+        elif 'name' in filters and 'race' in filters and 'species' not in filters and search is not None:
+            return Animal.objects.search_only_name_and_race(search)
+            
+        elif 'name' in filters and 'race' not in filters and 'species' in filters and search is not None:
+            return Animal.objects.search_only_name_and_species(search)
+            
+        elif 'race' in filters and 'name' not in filters and 'species' in filters and search is not None:
+            return Animal.objects.search_only_race_and_species(search)
+            
+        elif 'species' in filters and 'race' in filters and 'name' in filters and search is not None:
+            return Animal.objects.search_only_name_race_and_species(search)
+            
+        return Animal.objects.all()
 
 class ImageAnimalViewSet(generics.RetrieveUpdateDestroyAPIView):
 
