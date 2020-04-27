@@ -1,17 +1,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.dispatch import receiver
-from django.db.models.signals import post_save
-from rest_framework.authtoken.models import Token
-from django.contrib.auth.models import User
-from rest_api.managers import AnimalManager
-
-# This receiver handles token creation when a new user is created.
-@receiver(post_save, sender=User)
-def create_auth_token(sender, instance=None, created=False, **kwargs):
-    if created:
-        Token.objects.create(user=instance)
+from rest_api.managers.animals import AnimalManager
+from rest_api.models.profile import Profile
 
 
 class Animal(models.Model):
@@ -22,12 +13,13 @@ class Animal(models.Model):
     race = models.TextField(blank=True, null=True)
     gender = models.CharField(max_length=255, blank=False, null=True)
     owner = models.ForeignKey(
-        'auth.User',
+        Profile,
         related_name='animals',
         on_delete=models.CASCADE, blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     objects = AnimalManager()
+
 
 class ImageAnimal(models.Model):
     animal = models.ForeignKey(Animal,

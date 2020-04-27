@@ -1,26 +1,9 @@
-from rest_framework import generics, permissions, viewsets
-from rest_framework.response import Response
-from .permissions import IsOwner
-from .serializers import UserSerializer, AnimalSerializer
-from .models import Animal
-from django.contrib.auth.models import User
 from rest_framework import generics, viewsets
-from .models import Animal, ImageAnimal
-from .serializers import UserSerializer, AnimalSerializer, ImageSerializerSimple
+from rest_api.models.animals import Animal, ImageAnimal
+from rest_api.serializers.animals import AnimalSerializer, ImageSerializerSimple
 
 
-class UserView(generics.ListAPIView):
-    """View to list the user queryset."""
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-class UserDetailsView(generics.RetrieveAPIView):
-    """View to retrieve a user instance."""
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-class AnimalViewSet(viewsets.ModelViewSet):
+class AnimalViewSet(viewsets.ReadOnlyModelViewSet):
     """
     A simple ViewSet for listing or retrieving animals.
     """ 
@@ -55,6 +38,7 @@ class AnimalViewSet(viewsets.ModelViewSet):
                 return Animal.objects.search_only_name_race_and_species(search)
             
         return Animal.objects.all()
+
 
 class ImageAnimalViewSet(generics.RetrieveUpdateDestroyAPIView):
 
