@@ -1,8 +1,7 @@
 from __future__ import unicode_literals
-
 from django.db import models
-
 from django.db.models import Q
+
 
 class AnimalManager(models.Manager):
     def search_only_name(self, search):

@@ -1,5 +1,5 @@
 from rest_framework.permissions import BasePermission
-from .models import Animal
+from rest_api.models.animals import Animal
 
 
 class IsOwner(BasePermission):

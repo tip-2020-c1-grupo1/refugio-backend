@@ -4,16 +4,23 @@ from django.db import migrations, models
 from django.contrib.auth.models import User     # where User lives
 import os                                      # env var access
 
+from rest_api.services.profile import ProfileService
+
+
 def forwards_func(apps, schema_editor):
   # build the user you now have access to via Django magic
     if not User.objects.filter(username='admin').exists() : 
-      User.objects.create_superuser('admin', password='superuser123', email='admin@admin.com')
+      user = User.objects.create_superuser('admin', password='superuser123', email='admin@admin.com')
+      ADMIN = 'ADM'
+      ProfileService.create_profile('','', user, ADMIN)
     else:
       print('Superuser already created')
+
 
 def reverse_func(apps, schema_editor):
     # destroy what forward_func builds
     pass
+
 
 class Migration(migrations.Migration):
     dependencies = [ ('rest_api', '0001_initial'),

@@ -8,6 +8,7 @@ schema_view = get_swagger_view(title='REFUGIO API')
 
 urlpatterns = [
     path('docs/', schema_view),
+    # path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
     path('admin/', admin.site.urls),
     path('api/', include('rest_api.urls')),
     path('watchman/', include('watchman.urls')),
