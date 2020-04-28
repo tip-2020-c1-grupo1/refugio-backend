@@ -4,6 +4,7 @@ from rest_api.views.animals import AnimalViewSet
 from rest_api.views.profile import UserReadOnlyView, ProfileViewSet
 from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework import routers
+from django.conf import settings
 
 router = routers.DefaultRouter()
 router.register(r'animals', AnimalViewSet, basename='Animal')
@@ -15,3 +16,13 @@ urlpatterns = [
     path('auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('get-token/', obtain_auth_token),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+
+        # For django versions before 2.0:
+        # url(r'^__debug__/', include(debug_toolbar.urls)),
+
+    ] + urlpatterns
