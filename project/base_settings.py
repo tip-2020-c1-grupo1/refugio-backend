@@ -23,7 +23,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 # Application definition
 
 INSTALLED_APPS = [
-    # 'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -35,9 +34,11 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework_swagger',
     'rest_framework.authtoken',
+    'django_admin_listfilter_dropdown',
     'rest_api',
     'watchman',
 ]
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
