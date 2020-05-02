@@ -24,5 +24,5 @@ class ProfileSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         """Map this serializer to the default django user model."""
         model = Profile
-        fields = ('google_id', 'image_url', 'type_of_profile', 'username', 'first_name', 'last_name', 'email', 'animals')
+        fields = ('google_id', 'phone', 'image_url', 'type_of_profile', 'username', 'first_name', 'last_name', 'email', 'animals')
         depth = 1
