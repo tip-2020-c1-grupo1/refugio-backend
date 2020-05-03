@@ -12,6 +12,20 @@ class ProfileViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProfileSerializer
 
     @action(detail=False, methods=['post'])
+    def update_profile(self, request):
+        data = request.data
+        print(data)
+        if 'email' not in data:
+            content = {'Error': 'Please send email'}
+            return Response(content, status=status.HTTP_400_BAD_REQUEST)
+        profile = ProfileService.get_by_email(data['email'])
+        profile.phone = data['phone']
+        profile.user.first_name = data['firstName']
+        profile.user.last_name = data['lastName']
+        profile.save()
+        return Response(status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['post'])
     def get_or_create_profile(self, request):
         data = request.data
         print(data)

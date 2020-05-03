@@ -15,11 +15,16 @@ TYPES_OF_PROFILE_CHOICES = [
 class ProfileService(object):
 
     @staticmethod
-    def create_profile(google_id, image_url, user, type_of_profile=ADOPTER):
+    def create_profile(google_id, image_url, user, type_of_profile=ADOPTER, phone=''):
         return Profile.objects.create(image_url=image_url,
                                       google_id=google_id,
                                       user=user,
-                                      type_of_profile=type_of_profile)
+                                      type_of_profile=type_of_profile,
+                                      phone=phone)
+
+    @staticmethod
+    def get_by_email(email):
+        return Profile.objects.get_by_email(email)
 
     @staticmethod
     def get_profile(data):
@@ -38,8 +43,13 @@ class ProfileService(object):
         image_url = data['imageUrl']
         google_id = data['googleId']
         if profile is None:
-            profile = ProfileService.create_profile(google_id, image_url, user)
+            phone = ''
+            if 'phone' in data:
+                phone = data['phone']
+            profile = ProfileService.create_profile(google_id, image_url, user, phone)
         if profile.image_url == '' and image_url != '':
+            if 'phone' in data:
+                profile.phone = data['phone']
             profile.image_url = image_url
             profile.google_id = google_id
             profile.save()

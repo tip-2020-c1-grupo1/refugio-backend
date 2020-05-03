@@ -34,11 +34,28 @@ class CustomUserAdmin(UserAdmin):
                 }),)
         return fieldsets
 
+    def has_delete_permission(self, request, obj=None):
+        if obj is not None and obj.is_superuser:
+            return request.user.is_superuser
+        if obj is not None and obj.is_staff:
+            return request.user.is_superuser
+        return True
+
+    def has_change_permission(self, request, obj=None):
+        if obj is not None and obj.is_superuser:
+            return request.user.is_superuser
+        if obj is not None and obj.is_staff:
+            return request.user.is_superuser
+        return True
+
     def get_readonly_fields(self, request, obj=None):
+        print(obj.__dict__)
         if request.user.is_superuser:
             return super(CustomUserAdmin, self).get_readonly_fields(request, obj)
         else:
-            return 'date_joined', 'username', 'email', 'is_staff', 'is_superuser'
+            if obj is not None and obj.is_superuser:
+                return 'username', 'first_name', 'last_name', 'email', 'is_staff', 'is_superuser'
+            return 'username', 'email', 'is_staff', 'is_superuser'
 
     def get_inline_instances(self, request, obj=None):
         if not obj:

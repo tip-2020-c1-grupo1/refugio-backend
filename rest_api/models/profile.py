@@ -32,6 +32,7 @@ class Profile(models.Model):
         default=ADOPTER,
         verbose_name= 'Tipo de Perfil'
     )
+    phone = models.CharField(max_length=30, null=True, blank=True, verbose_name='Id de Google')
     objects = ProfileManager()
 
     def __str__(self):
