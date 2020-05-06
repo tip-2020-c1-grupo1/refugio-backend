@@ -1,20 +1,31 @@
-from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework import status, viewsets
+from rest_framework.decorators import action
 from rest_framework.response import Response
+
+from rest_api.models.adoption import AdoptionRequest
+from rest_api.serializers.adoption import AdoptionRequestSerializer
 from rest_api.services.adoption import AdoptionRequestService
 
 
-@api_view(['POST'])
-def request_adoption(request):
-    data = request.data
-    if 'email' not in data or 'animal_pk' not in data:
-        content = {'Error': 'Falta ingresar usuario o animal'}
-        return Response(content, status=status.HTTP_404_NOT_FOUND)
+class AdoptionViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    A simple ViewSet for listing or retrieving animals.
+    """
+    serializer_class = AdoptionRequestSerializer
+    queryset = AdoptionRequest.objects.all()
 
-    _, was_created = AdoptionRequestService.create_with(data['email'], data['animal_pk'])
+    @action(detail=False, methods=['post'])
+    def request_adoption(self, request):
+        data = request.data
+        if 'email' not in data or 'animal_pk' not in data:
+            content = {'Error': 'Falta ingresar usuario o animal'}
+            return Response(content, status=status.HTTP_404_NOT_FOUND)
 
-    if was_created:
-        content = {
-            'Error': 'Usted ya intento solicitar la adopción de este animal en el pasado, volveremos a contactarlo'}
-        return Response(content, status=status.HTTP_412_PRECONDITION_FAILED)
-    return Response({'Ok': 'Se creo la solicitud de adopción con exito'})
+        _, was_created = AdoptionRequestService.create_with(data['email'], data['animal_pk'])
+
+        if was_created:
+            content = {
+                'Error': 'Usted ya intento solicitar la adopción de este animal en el pasado, volveremos a contactarlo'}
+            return Response(content, status=status.HTTP_412_PRECONDITION_FAILED)
+
+        return Response({'Ok': 'Se creo la solicitud de adopción con exito'}, status=status.HTTP_200_OK)
