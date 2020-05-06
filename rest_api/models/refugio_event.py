@@ -20,6 +20,9 @@ class RefugioEvent(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
 
+    def cambio_realizado_por(self):
+        return self.reported_by.user.email if self.reported_by else ''
+
     class Meta:
         verbose_name_plural = "Eventos del refugio"
         verbose_name = "Evento del refugio"

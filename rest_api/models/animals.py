@@ -15,6 +15,8 @@ from rest_api.services.timeline import TimelineService
 
 logger = logging.getLogger(__name__)
 
+AVAILABLE = 'AVA'
+
 
 class Animal(models.Model):
     """This class represents the Animals model."""
@@ -22,6 +24,11 @@ class Animal(models.Model):
     species = models.CharField(max_length=255, blank=False, verbose_name='Especie')
     description = models.TextField(blank=True, null=True, verbose_name='Descripcion')
     race = models.TextField(blank=True, null=True, verbose_name='Raza')
+    status_request = models.CharField(
+        max_length=3,
+        default=AVAILABLE,
+        verbose_name='Estado de adopción'
+    )
     gender = models.CharField(max_length=255, blank=False, null=True, verbose_name='Genero')
     owner = models.ForeignKey(
         Profile,

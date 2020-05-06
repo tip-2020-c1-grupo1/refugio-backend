@@ -1,5 +1,7 @@
+from rest_api.models.animals import Animal
 from rest_api.models.refugio_event import RefugioEvent
 
+AVAILABLE = 'AVA'
 STARTED = 'STA'
 WAIT_LIST = 'WAL'
 ACCEPTED = 'ACC'
@@ -8,6 +10,7 @@ ON_HOLD = 'ONH'
 ADOPTED = 'ADO'
 
 TYPES_OF_REQUEST_CHOICES = {
+    AVAILABLE: 'Disponible',
     STARTED: 'Comenzo',
     WAIT_LIST: 'En espera',
     ACCEPTED: 'Aceptado',
@@ -60,15 +63,17 @@ class RefugioEventService(object):
         animal = timeline.animal
         animal_pk = str(animal.pk)
         email = adoption_request.potencial_adopter.user.email
-        status = adoption_request.status
+        status = TYPES_OF_REQUEST_CHOICES[adoption_request.status]
         metadata = str({'animal': animal_pk, 'adopter_email': email,
-                        'requested_by' : requester_email,
-                        'status': TYPES_OF_REQUEST_CHOICES[status]})
+                        'requested_by': requester_email,
+                        'status': status})
 
         description = animal.name + ' - PK: ' + animal_pk + ' cuya solicitud fue iniciada por el usuario cuyo mail es: '
-        description += email + ' paso a ' + TYPES_OF_REQUEST_CHOICES[status] + ' por ' + requester_email
-        animal.status = status
+        description += email + ' paso a ' + status + ' por ' + requester_email
+
+        animal.status_request = status
         animal.save()
+
         return RefugioEvent.objects.create(timeline=timeline,
                                            description=description,
                                            reported_by=profile,

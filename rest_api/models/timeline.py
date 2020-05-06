@@ -9,6 +9,9 @@ class Timeline(models.Model):
                                   on_delete=models.CASCADE, blank=True, null=True, verbose_name='Animal')
     description = models.TextField(blank=True, null=True, verbose_name='Descripcion')
 
+    def animal_asociado(self):
+        return str(self.animal.pk) + ' - ' + self.animal.name
+
     class Meta:
         verbose_name_plural = "Lineas del tiempo de animales"
         verbose_name = "Linea del tiempo para animal"

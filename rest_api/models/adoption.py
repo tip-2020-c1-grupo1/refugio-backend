@@ -11,6 +11,7 @@ import logging
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
+AVAILABLE = 'AVA'
 STARTED = 'STA'
 WAIT_LIST = 'WAL'
 ACCEPTED = 'ACC'
@@ -19,13 +20,13 @@ ON_HOLD = 'ONH'
 ADOPTED = 'ADO'
 
 TYPES_OF_REQUEST_CHOICES = [
+    (AVAILABLE, 'Disponible'),
     (STARTED, 'Comenzo'),
     (WAIT_LIST, 'En espera'),
     (ACCEPTED, 'Aceptado'),
     (REJECTED, 'Rechazado'),
     (ON_HOLD, 'En revisión'),
     (ADOPTED, 'Adoptado'),
-
 ]
 
 
@@ -41,10 +42,19 @@ class AdoptionRequest(models.Model):
     status = models.CharField(
         max_length=3,
         choices=TYPES_OF_REQUEST_CHOICES,
-        default=STARTED,
-        verbose_name='Tipo de Perfil'
+        default=AVAILABLE,
+        verbose_name='Estado de petición'
     )
     objects = AdoptionRequestManager()
 
+    def animal_solicitado(self):
+        animal = self.animal
+        return animal.name + ' - ' + animal.species + ' - ' + animal.race
+
+    def potencial_adoptante(self):
+        profile = self.potencial_adopter.user
+        return profile.username + ' - ' + profile.email
+
     class Meta:
-        verbose_name_plural = "Solicitud de adopción de animales"
+        verbose_name_plural = "Solicitudes de adopción"
+        verbose_name = "Solicitud de adopción"
