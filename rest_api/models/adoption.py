@@ -40,7 +40,7 @@ class AdoptionRequest(models.Model):
                                           on_delete=models.CASCADE, blank=True, null=True, verbose_name='Profile')
 
     status = models.CharField(
-        max_length=3,
+        max_length=30,
         choices=TYPES_OF_REQUEST_CHOICES,
         default=AVAILABLE,
         verbose_name='Estado de petición'

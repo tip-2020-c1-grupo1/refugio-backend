@@ -1,13 +1,13 @@
 from rest_api.models.animals import Animal
 from rest_api.models.refugio_event import RefugioEvent
 
-AVAILABLE = 'AVA'
-STARTED = 'STA'
-WAIT_LIST = 'WAL'
-ACCEPTED = 'ACC'
-REJECTED = 'REJ'
-ON_HOLD = 'ONH'
-ADOPTED = 'ADO'
+AVAILABLE = 'Disponible'
+STARTED = 'Comenzo'
+WAIT_LIST = 'En espera'
+ACCEPTED = 'Aceptado'
+REJECTED = 'Rechazado'
+ON_HOLD = 'En revisión'
+ADOPTED = 'Adoptado'
 
 TYPES_OF_REQUEST_CHOICES = {
     AVAILABLE: 'Disponible',
