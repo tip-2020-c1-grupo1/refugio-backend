@@ -15,7 +15,7 @@ from rest_api.services.timeline import TimelineService
 
 logger = logging.getLogger(__name__)
 
-AVAILABLE = 'AVA'
+AVAILABLE = 'DISPONIBLE'
 
 
 class Animal(models.Model):
@@ -25,7 +25,7 @@ class Animal(models.Model):
     description = models.TextField(blank=True, null=True, verbose_name='Descripcion')
     race = models.TextField(blank=True, null=True, verbose_name='Raza')
     status_request = models.CharField(
-        max_length=3,
+        max_length=30,
         default=AVAILABLE,
         verbose_name='Estado de adopción'
     )
