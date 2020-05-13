@@ -48,6 +48,11 @@
    
         http://localhost:8000/api/users/
 	
+    8. Run the tests (change it depending on settings file)
+   	```bash
+            $ python manage.py test --settings=project.settings_sqlite
+        ```
+	
   
 Check with curl:
 
