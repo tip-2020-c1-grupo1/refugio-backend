@@ -15,7 +15,7 @@ from rest_api.services.timeline import TimelineService
 
 logger = logging.getLogger(__name__)
 
-AVAILABLE = 'DISPONIBLE'
+AVAILABLE = 'Disponible'
 
 
 class Animal(models.Model):
