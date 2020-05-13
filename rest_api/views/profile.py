@@ -38,7 +38,7 @@ class ProfileViewSet(viewsets.ReadOnlyModelViewSet):
         if 'imageUrl' not in data:
             content = {'Error': 'Please send imageUrl'}
             return Response(content, status=status.HTTP_400_BAD_REQUEST)
-        profile = ProfileService.get_profile(data)
+        profile = ProfileService.prepare_profile(data)
 
         serializer = self.get_serializer(profile)
         return Response(serializer.data)
