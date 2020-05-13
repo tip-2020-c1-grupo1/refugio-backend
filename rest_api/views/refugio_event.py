@@ -10,3 +10,4 @@ class RefugioEventViewSet(viewsets.ReadOnlyModelViewSet):
     """ 
     serializer_class = RefugioEventSerializer
     queryset = RefugioEvent.objects.all()
+
