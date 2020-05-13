@@ -13,7 +13,7 @@
 * #### Steps
     1. Cd into your the cloned repo as such:
         ```bash
-            $ cd django-heroku-rest-api
+            $ cd refugio-backend
         ```
     2. Create and fire up your virtual environment:
         ```bash
