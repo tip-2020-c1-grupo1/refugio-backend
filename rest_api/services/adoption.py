@@ -3,7 +3,7 @@ from rest_api.services.profile import ProfileService
 from rest_api.models.adoption import AdoptionRequest
 from rest_api.services.refugio_event import RefugioEventService
 
-STARTED = 'STA'
+REQUESTED = 'STA'
 
 
 class AdoptionRequestService(object):
@@ -13,13 +13,13 @@ class AdoptionRequestService(object):
         profile = ProfileService.get_by_email(email)
         animal = AnimalService.get_by_id(animal_pk)
         adoption_request_list = AdoptionRequest.objects.filter(
-            status=STARTED,
+            status=REQUESTED,
             potencial_adopter=profile,
             animal=animal
         )
         if adoption_request_list.exists():
             return adoption_request_list.first(), True
         adoption_request = AdoptionRequest.objects.create(
-                status=STARTED, potencial_adopter=profile, animal=animal)
+                status=REQUESTED, potencial_adopter=profile, animal=animal)
         RefugioEventService.create_adoption_request_event(profile, animal)
         return adoption_request, False

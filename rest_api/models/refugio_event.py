@@ -7,7 +7,8 @@ from rest_api.models.timeline import Timeline
 
 class RefugioEvent(models.Model):
     """This class represents the RefugioEvent model."""
-    description = models.TextField(blank=True, null=True, verbose_name='Descripcion')
+    title = models.CharField(max_length=80, verbose_name='Titulo')
+    description = models.TextField(blank=True, null=True, verbose_name='Descripción')
     timeline = models.ForeignKey(
         Timeline,
         related_name='refugio_events',
