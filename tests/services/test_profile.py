@@ -10,7 +10,6 @@ class AnimalTestCase(TestCase):
         self.image_url = 'some_image_url'
 
     def test_user_created_with_profile_given_data(self):
-        """Animals that can speak are correctly identified"""
         data = {
             'email': 'custom@email.com',
             'givenName': 'some_name',
@@ -27,7 +26,6 @@ class AnimalTestCase(TestCase):
         self.assertFalse(profile.user.is_staff)
 
     def test_user_already_created_with_profile_given_data(self):
-        """Animals that can speak are correctly identified"""
         user = User.objects.create_user('pepe',
                                              is_staff=False,
                                              is_superuser=False,

@@ -15,12 +15,10 @@ class AnimalViewSet(viewsets.ReadOnlyModelViewSet):
         state_list = self.request.query_params.get('state', None)
         animals = Animal.objects.all()
 
-
         if filter_elem is not None and state_list is not None:
             
             filters = filter_elem.split('_')
             state = state_list.split('_')
-            print(state)
             animals = animals.filter(status_request__in=state)
 
             if 'name' in filters and 'race' not in filters and 'species' not in filters and search is not None:
