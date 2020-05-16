@@ -1,8 +1,21 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 from rest_api.managers.animals import AnimalManager
 from rest_api.models.profile import Profile
+
+
+import logging
+
+# Get an instance of a logger
+from rest_api.services.timeline import TimelineService
+
+logger = logging.getLogger(__name__)
+
+AVAILABLE = 'Disponible'
 
 
 class Animal(models.Model):
@@ -11,6 +24,11 @@ class Animal(models.Model):
     species = models.CharField(max_length=255, blank=False, verbose_name='Especie')
     description = models.TextField(blank=True, null=True, verbose_name='Descripcion')
     race = models.TextField(blank=True, null=True, verbose_name='Raza')
+    status_request = models.CharField(
+        max_length=30,
+        default=AVAILABLE,
+        verbose_name='Estado de adopción'
+    )
     gender = models.CharField(max_length=255, blank=False, null=True, verbose_name='Genero')
     owner = models.ForeignKey(
         Profile,
@@ -22,6 +40,7 @@ class Animal(models.Model):
 
     class Meta:
         verbose_name_plural = "Animales"
+        verbose_name = "Animal"
 
 
 class ImageAnimal(models.Model):
@@ -32,3 +51,12 @@ class ImageAnimal(models.Model):
 
     class Meta:
         verbose_name_plural = "Imagenes de animales"
+        verbose_name = "Animal"
+
+
+@receiver(post_save, sender=Animal)
+def create_animal(sender, instance, created, **kwargs):
+    logger.info(instance.__dict__)
+    print(instance.__dict__)
+    if created:
+        TimelineService.create_initial_timeline(animal=instance)

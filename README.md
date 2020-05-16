@@ -13,7 +13,7 @@
 * #### Steps
     1. Cd into your the cloned repo as such:
         ```bash
-            $ cd django-heroku-rest-api
+            $ cd refugio-backend
         ```
     2. Create and fire up your virtual environment:
         ```bash
@@ -47,6 +47,11 @@
     7. Test it Locally
    
         http://localhost:8000/api/users/
+	
+    8. Run the tests (change it depending on settings file)
+   	```bash
+            $ python manage.py test --settings=project.settings_sqlite
+        ```
 	
   
 Check with curl:

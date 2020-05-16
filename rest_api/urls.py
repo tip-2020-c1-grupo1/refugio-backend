@@ -1,15 +1,22 @@
 from django.urls import path, include
 
+from rest_api.views.adoption import AdoptionViewSet
+from rest_api.views.refugio_event import RefugioEventViewSet
+from rest_api.views.timeline import TimelineViewSet
 from rest_api.views.animals import AnimalViewSet
 from rest_api.views.profile import UserReadOnlyView, ProfileViewSet
 from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework import routers
 from django.conf import settings
 
+
 router = routers.DefaultRouter()
 router.register(r'animals', AnimalViewSet, basename='Animal')
 router.register(r'profiles', ProfileViewSet, basename='User')
 router.register(r'users', UserReadOnlyView, basename='Profile')
+router.register(r'timelines', TimelineViewSet, basename='Timeline')
+router.register(r'events', RefugioEventViewSet, basename='RefugioEvent')
+router.register(r'adoption', AdoptionViewSet, basename='Adoption')
 
 urlpatterns = [
     path('', include(router.urls)),

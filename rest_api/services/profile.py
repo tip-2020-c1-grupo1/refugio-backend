@@ -27,7 +27,7 @@ class ProfileService(object):
         return Profile.objects.get_by_email(email)
 
     @staticmethod
-    def get_profile(data):
+    def prepare_profile(data):
         user = User.objects.filter(email=data['email']).first()
         if user is None:
             from django.contrib.auth.hashers import make_password
