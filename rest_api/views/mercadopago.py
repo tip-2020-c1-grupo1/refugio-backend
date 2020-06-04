@@ -36,10 +36,11 @@ def get_preference_id_via_mp(request):
     preference = {
         "items": [
             {
-                "title": "Test",
+                "title": "Donación Refug.io",
                 "quantity": 1,
+                "description": "Caridad",
                 "currency_id": "ARS",
-                "unit_price": amount
+                "unit_price": 1.0
             }
         ]
     }
