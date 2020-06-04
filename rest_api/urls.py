@@ -5,6 +5,7 @@ from rest_api.views.refugio_event import RefugioEventViewSet
 from rest_api.views.timeline import TimelineViewSet
 from rest_api.views.animals import AnimalViewSet
 from rest_api.views.profile import UserReadOnlyView, ProfileViewSet
+from rest_api.views.mercadopago import get_preference_id
 from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework import routers
 from django.conf import settings
@@ -19,6 +20,7 @@ router.register(r'events', RefugioEventViewSet, basename='RefugioEvent')
 router.register(r'adoption', AdoptionViewSet, basename='Adoption')
 
 urlpatterns = [
+    path('get_preference_id', get_preference_id),
     path('', include(router.urls)),
     path('auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('get-token/', obtain_auth_token),
