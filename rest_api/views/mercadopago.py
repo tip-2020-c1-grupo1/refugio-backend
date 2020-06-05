@@ -1,3 +1,7 @@
+import json
+from json.encoder import JSONEncoder
+
+from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -54,18 +58,8 @@ def get_preference_id_via_mp(request):
 def get_preference_id(request):
     amount = float(request.GET.get('amount', 0))
     preference_url = 'checkout/preferences?access_token=' + ACCESS_TOKEN
+
     data = {
-        "items": [
-            {
-                "title": "Donación Refug.io",
-                "description": "Caridad",
-                "quantity": 1,
-                "currency_id": "ARS",
-                "unit_price": 1.0
-            }
-        ]
-    }
-    data2 = {
         "items": [
             {
                 "title": "Donación Refug.io",
@@ -82,8 +76,7 @@ def get_preference_id(request):
         }
     }
     try :
-        ml_request = requests.post('https://api.mercadopago.com/checkout/preferences', headers=headers, params=params,
-                                 data=data, verify=False)
+        ml_request = requests.post('https://api.mercadopago.com/' + preference_url, data=JSONEncoder().encode(data))
         """"
         ml_request = requests.post(url=BASE_URL + preference_url,
                                    data=data,
@@ -92,10 +85,12 @@ def get_preference_id(request):
                                    verify=False)
         """
         print(ml_request.text)
-        response_data = ml_request.content
-        print(response_data)
+        response_data_string = ml_request.content.decode('utf-8')
+        print(response_data_string)
+        response_data_json = json.loads(response_data_string)
+        print(response_data_json)
         # podria haber un encoding de esto pero escribe y lo vemos
     except:
-        return Response({"error": 'Algo salio mal'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"error": 'Algo salió mal'}, status=status.HTTP_400_BAD_REQUEST)
 
-    return Response({"message": response_data})
+    return Response(response_data_json['init_point'])

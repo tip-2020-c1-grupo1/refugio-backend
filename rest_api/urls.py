@@ -23,8 +23,8 @@ router.register(r'colaboration', ColaborationViewSet, basename='Colaboration')
 
 urlpatterns = [
 
-    path('get_preference_id_via_mp', get_preference_id_via_mp),
-    path('get_preference_id', get_preference_id),
+    path('preference_id_via_mp', get_preference_id_via_mp),
+    path('preference_id', get_preference_id),
     path('', include(router.urls)),
     path('auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('get-token/', obtain_auth_token),
