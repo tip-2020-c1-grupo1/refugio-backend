@@ -3,6 +3,7 @@ from django.urls import path, include
 from rest_api.views.adoption import AdoptionViewSet
 from rest_api.views.colaboration import ColaborationViewSet
 from rest_api.views.refugio_event import RefugioEventViewSet
+from rest_api.views.complaint import ComplaintViewSet
 from rest_api.views.timeline import TimelineViewSet
 from rest_api.views.animals import AnimalViewSet
 from rest_api.views.profile import UserReadOnlyView, ProfileViewSet
@@ -20,6 +21,7 @@ router.register(r'timelines', TimelineViewSet, basename='Timeline')
 router.register(r'events', RefugioEventViewSet, basename='RefugioEvent')
 router.register(r'adoption', AdoptionViewSet, basename='Adoption')
 router.register(r'colaboration', ColaborationViewSet, basename='Colaboration')
+router.register(r'complaint', ComplaintViewSet, basename='Complaint')
 
 urlpatterns = [
 

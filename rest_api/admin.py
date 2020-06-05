@@ -7,6 +7,7 @@ from rest_framework.authtoken.models import Token
 from rest_api.models.adoption import AdoptionRequest
 from rest_api.models.animals import Animal, ImageAnimal
 from rest_api.models.colaboration import Colaboration
+from rest_api.models.complaint import Complaint
 from rest_api.models.profile import Profile
 from django.contrib.auth.models import User, Permission
 from django.contrib.auth.admin import UserAdmin
@@ -171,6 +172,7 @@ admin.site.unregister(Token)
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Permission)
+admin.site.register(Complaint)
 admin.site.register(RefugioEvent, RefugioEventAdmin)
 admin.site.register(Colaboration, ColaborationAdmin)
 admin.site.register(Timeline, TimelineAdmin)
