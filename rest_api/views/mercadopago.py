@@ -70,9 +70,9 @@ def get_preference_id(request):
             }
         ],
         "back_urls": {
-            "success": "http://localhost:3000/donación/exito",
-            "pending": "http://localhost:3000/donación/pendiente",
-            "failure": "http://localhost:3000/donación/fallo"
+            "success": "http://localhost:3000/donacion/exito",
+            "pending": "http://localhost:3000/donacion/pendiente",
+            "failure": "http://localhost:3000/donacion/fallo"
         }
     }
     try :
