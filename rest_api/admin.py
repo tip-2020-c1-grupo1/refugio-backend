@@ -6,6 +6,8 @@ from rest_framework.authtoken.models import Token
 
 from rest_api.models.adoption import AdoptionRequest
 from rest_api.models.animals import Animal, ImageAnimal
+from rest_api.models.colaboration import Colaboration
+from rest_api.models.complaint import Complaint
 from rest_api.models.profile import Profile
 from django.contrib.auth.models import User, Permission
 from django.contrib.auth.admin import UserAdmin
@@ -158,6 +160,11 @@ class TimelineAdmin(admin.ModelAdmin):
         return super(TimelineAdmin, self).get_queryset(request).prefetch_related('animal')
 
 
+class ColaborationAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'name')
+    filter_horizontal = ('colaborators',)
+
+
 admin.site.site_header = "Refugio App Backoffice"
 admin.site.site_title = "Backoffice Portal"
 admin.site.index_title = "Bienvenidos a Refugio App"
@@ -166,7 +173,9 @@ admin.site.unregister(Token)
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Permission)
+admin.site.register(Complaint)
 admin.site.register(RefugioEvent, RefugioEventAdmin)
+admin.site.register(Colaboration, ColaborationAdmin)
 admin.site.register(Timeline, TimelineAdmin)
 admin.site.register(Animal, AnimalAdmin)
 admin.site.register(AdoptionRequest, AdoptionRequestAdmin)

@@ -11,6 +11,16 @@ class UserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ProfileEmailSerializer(serializers.ModelSerializer):
+    email = serializers.CharField(read_only=True, source="user.email")
+    first_name = serializers.CharField(read_only=True, source="user.first_name")
+    last_name = serializers.CharField(read_only=True, source="user.last_name")
+
+    class Meta:
+        model = Profile
+        fields = ('email', 'first_name', 'last_name')
+
+
 class ProfileSerializer(serializers.HyperlinkedModelSerializer):
     """A user serializer to aid in authentication and authorization."""
 
