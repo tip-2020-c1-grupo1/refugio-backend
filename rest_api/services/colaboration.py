@@ -4,9 +4,17 @@ from rest_api.services.profile import ProfileService
 class ColaborationRequestService(object):
 
     @staticmethod
-    def create_with(email, colab_pk):
+    def add_colaboration(email, colab_pk):
         profile = ProfileService.get_by_email(email)
         colab = Colaboration.objects.get(pk=colab_pk)
-        colab.status_request = 'RESERVADO'
-        colab.colaborator = profile
+        colab.colaborators.add(profile)
+        colab.save()
+        colab.satisfied = colab.colaborators.count() == colab.required_colaborators
+        if colab.satisfied:
+            colab.status_request = 'Reservado'
         return colab.save()
+
+    @staticmethod
+    def is_satisfied(colab_pk):
+        colab = Colaboration.objects.get(pk=colab_pk)
+        return colab.satisfied

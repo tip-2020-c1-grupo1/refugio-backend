@@ -26,7 +26,9 @@ class ColaborationViewSet(viewsets.ReadOnlyModelViewSet):
         if 'email' not in data or 'colab_pk' not in data:
             content = {'Error': 'Falta ingresar usuario o animal'}
             return Response(content, status=status.HTTP_404_NOT_FOUND)
-
-        ColaborationRequestService.create_with(data['email'], data['colab_pk'])
+        if ColaborationRequestService.is_satisfied(data['colab_pk']):
+            content = {'Error': 'No se pueden agregar más colaboradores'}
+            return Response(content, status=status.HTTP_412_PRECONDITION_FAILED)
+        ColaborationRequestService.add_colaboration(data['email'], data['colab_pk'])
 
         return Response({'Ok': 'Se asigno su calificación con exito'}, status=status.HTTP_200_OK)

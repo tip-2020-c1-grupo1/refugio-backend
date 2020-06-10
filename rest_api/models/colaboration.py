@@ -19,10 +19,9 @@ class Colaboration(models.Model):
         default=AVAILABLE,
         verbose_name='Estado de colaboración'
     )
-    colaborator = models.ForeignKey(
-        Profile,
-        related_name='colaborations_of_user',
-        on_delete=models.CASCADE, blank=True, null=True, verbose_name='Colaborador')
+    satisfied = models.BooleanField(default=False)
+    required_colaborators = models.IntegerField(default=1)
+    colaborators = models.ManyToManyField(Profile, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
 

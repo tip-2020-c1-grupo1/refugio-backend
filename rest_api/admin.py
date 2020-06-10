@@ -162,6 +162,7 @@ class TimelineAdmin(admin.ModelAdmin):
 
 class ColaborationAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name')
+    filter_horizontal = ('colaborators',)
 
 
 admin.site.site_header = "Refugio App Backoffice"
