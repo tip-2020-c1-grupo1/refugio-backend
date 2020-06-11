@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from rest_api.models.animals import Animal, ImageAnimal
+from rest_api.serializers.vaccination_plan import VaccinationPlanSerializer
 
 
 class ImageSerializer(serializers.ModelSerializer):
@@ -24,13 +25,13 @@ class ImageSerializerSimple(serializers.ModelSerializer):
 
 class AnimalSerializer(serializers.ModelSerializer):
     """Serializer to map the model instance into json format."""
-
-    owner = serializers.ReadOnlyField(source='owner.username')
+    # source='vaccination_plan_animals', 
+    vaccination_plan_animals = VaccinationPlanSerializer(read_only=True)
     images = ImageSerializerSimple(many=True, required=False)
 
     class Meta:
         """Map this serializer to a model and their fields."""
         model = Animal
-        fields = ('id', 'name', 'description', 'status_request', 'species', 'race', 'gender', 'owner', 'images','date_created', 'date_modified')
+        fields = ('id', 'name', 'description', 'vaccination_plan_animals', 'status_request', 'species', 'race', 'gender', 'owner', 'images','date_created', 'date_modified')
         read_only_fields = ('date_created', 'date_modified')
 

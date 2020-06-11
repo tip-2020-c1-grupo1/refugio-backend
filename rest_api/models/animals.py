@@ -12,6 +12,7 @@ import logging
 
 # Get an instance of a logger
 from rest_api.services.timeline import TimelineService
+from rest_api.services.vaccination_plan import VaccinationPlanService
 
 logger = logging.getLogger(__name__)
 
@@ -60,3 +61,4 @@ def create_animal(sender, instance, created, **kwargs):
     print(instance.__dict__)
     if created:
         TimelineService.create_initial_timeline(animal=instance)
+        VaccinationPlanService.create_initial_vaccination_plan(animal=instance)
