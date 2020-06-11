@@ -5,7 +5,7 @@ from django.contrib.admin.widgets import AdminFileWidget
 from rest_framework.authtoken.models import Token
 
 from rest_api.models.adoption import AdoptionRequest
-from rest_api.models.animals import Animal, ImageAnimal
+from rest_api.models.animals import Animal, ImageAnimal, AnimalSpecie
 from rest_api.models.colaboration import Colaboration
 from rest_api.models.complaint import Complaint
 from rest_api.models.profile import Profile
@@ -100,10 +100,10 @@ class InlineImage(admin.TabularInline):
 
 class AnimalAdmin(admin.ModelAdmin):
     inlines = [InlineImage]
-    list_display = ('name', 'species', 'race',)
+    list_display = ('name', 'race', 'especie_animal')
     list_filter = (
         ('name', DropdownFilter),
-        ('species', DropdownFilter),
+        ('species__name', DropdownFilter),
         ('race', DropdownFilter),
     )
 
@@ -114,7 +114,7 @@ class AdoptionRequestAdmin(admin.ModelAdmin):
     list_filter = (
         ('status', ChoiceDropdownFilter),
         ('potencial_adopter__user__email', DropdownFilter),
-        ('animal__species', DropdownFilter), # adopter_requests
+        ('animal__species__name', DropdownFilter), # adopter_requests
         ('animal__name', DropdownFilter),
         ('animal__race', DropdownFilter),
     )

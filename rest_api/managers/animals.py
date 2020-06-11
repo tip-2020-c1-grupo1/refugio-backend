@@ -11,7 +11,7 @@ class AnimalManager(models.Manager):
         return self.filter(race__icontains=search)
     
     def search_only_species(self, search):
-        return self.filter(species__icontains=search)
+        return self.filter(species__name__icontains=search)
     
     def search_only_name_and_race(self, search):
         return self.filter(Q(name__contains=search) |
@@ -19,12 +19,12 @@ class AnimalManager(models.Manager):
     
     def search_only_race_and_species(self, search):
         return self.filter(Q(race__contains=search) |
-            Q(species__contains=search))
+            Q(species__name__contains=search))
     
     def search_only_name_and_species(self, search):
         return self.filter(Q(name__contains=search) |
-            Q(species__contains=search))
+            Q(species__name__contains=search))
     
     def search_only_name_race_and_species(self, search):
         return self.filter(Q(name__contains=search) | Q(race__contains=search) |
-            Q(species__contains=search))
+            Q(species__name__contains=search))

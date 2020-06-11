@@ -49,9 +49,11 @@ class AdoptionRequest(models.Model):
 
     def animal_solicitado(self):
         animal = self.animal
-        return animal.name + ' - ' + animal.species + ' - ' + animal.race
+        return animal.name + ' - ' + animal.species.name + ' - ' + animal.race
 
     def potencial_adoptante(self):
+        if self.potencial_adopter is None:
+            return ''
         profile = self.potencial_adopter.user
         return profile.username + ' - ' + profile.email
 

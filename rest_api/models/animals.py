@@ -12,19 +12,30 @@ import logging
 
 # Get an instance of a logger
 from rest_api.services.timeline import TimelineService
-from rest_api.services.vaccination_plan import VaccinationPlanService
 
 logger = logging.getLogger(__name__)
 
 AVAILABLE = 'Disponible'
 
 
+class AnimalSpecie(models.Model):
+    name = models.TextField(blank=True, null=True, verbose_name='Especie')
+    default_vaccination_plan = models.TextField(blank=True, null=True,
+                                                verbose_name='Plan vacunatorio por default')
+
+    def __str__(self):
+        return self.name
+
+
 class Animal(models.Model):
     """This class represents the Animals model."""
     name = models.CharField(max_length=255, blank=False, unique=True, verbose_name='Nombre')
-    species = models.CharField(max_length=255, blank=False, verbose_name='Especie')
+    species = models.ForeignKey(
+        AnimalSpecie,
+        related_name='animal_specie',
+        on_delete=models.CASCADE, blank=True, null=True, verbose_name='Especie')
     description = models.TextField(blank=True, null=True, verbose_name='Descripcion')
-    race = models.TextField(blank=True, null=True, verbose_name='Raza')
+    race = models.CharField(max_length=255, blank=True, null=True, verbose_name='Raza')
     status_request = models.CharField(
         max_length=30,
         default=AVAILABLE,
@@ -37,7 +48,14 @@ class Animal(models.Model):
         on_delete=models.CASCADE, blank=True, null=True, verbose_name='Dueño')
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
+    vaccination_plan = models.TextField(blank=True, null=True, verbose_name='Plan vacunatorio')
     objects = AnimalManager()
+
+    def especie_animal(self):
+        return self.species.name
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name_plural = "Animales"
@@ -61,4 +79,5 @@ def create_animal(sender, instance, created, **kwargs):
     print(instance.__dict__)
     if created:
         TimelineService.create_initial_timeline(animal=instance)
-        VaccinationPlanService.create_initial_vaccination_plan(animal=instance)
+        instance.vaccination_plan = instance.species.default_vaccination_plan
+        instance.save()

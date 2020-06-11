@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
       "name": "Brittany",
-      "species": "Perro",
+      "species": 1,
       "gender": "Hembra",
       "race": "Bretón",
       "description": "Brittany es hermosa y enérgica",
@@ -58,7 +58,7 @@
     "pk": 2,
     "fields": {
       "name": "Ethel",
-      "species": "Sloth",
+      "species": 2,
       "race": "Dos dedos",
       "description": "Es muy vago y duerme todo el día",
       "gender": "Macho",
@@ -111,7 +111,7 @@
     "pk": 3,
     "fields": {
       "name": "Zoe",
-      "species": "Gato",
+      "species": 3,
       "race": "N/A",
       "gender": "Hembra",
       "description": "Salta por todos lados y se esconde siempre",
@@ -164,7 +164,7 @@
     "pk": 4,
     "fields": {
       "name": "Taimado",
-      "species": "Perro",
+      "species": 1,
       "race": "Galgo",
       "gender": "Macho",
       "description": "Corre muy rápido y come poco",
@@ -217,7 +217,7 @@
     "pk": 5,
     "fields": {
       "name": "Garfield",
-      "species": "Gato",
+      "species": 3,
       "race": "N/A",
       "gender": "Macho",
       "description": "Le gusta la lazagna y dormir en una caja",
@@ -270,7 +270,7 @@
     "pk": 6,
     "fields": {
       "name": "Ferris",
-      "species": "Ferret",
+      "species": 4,
       "gender": "Macho",
       "race": "N/A",
       "description": "Hace muchos agujeros en la tierra, le gusta esconderse y jugar con otros animales",
