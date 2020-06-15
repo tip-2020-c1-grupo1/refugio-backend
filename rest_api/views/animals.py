@@ -15,31 +15,33 @@ class AnimalViewSet(viewsets.ReadOnlyModelViewSet):
         state_list = self.request.query_params.get('state', None)
         animals = Animal.objects.all()
 
-        if filter_elem is not None and state_list is not None:
+        if filter_elem is not None and search is not None:
             
             filters = filter_elem.split('_')
-            state = state_list.split('_')
 
-            if 'name' in filters and 'race' not in filters and 'species' not in filters and search is not None:
-                animals =  Animal.objects.search_only_name(search)
+            if 'name' in filters and 'race' not in filters and 'species' not in filters:
+                animals = Animal.objects.search_only_name(search)
                 
-            elif 'race' in filters and 'name' not in filters and 'species' not in filters and search is not None:
+            elif 'race' in filters and 'name' not in filters and 'species' not in filters:
                 animals = Animal.objects.search_only_race(search)
                 
-            elif 'species' in filters and 'race' not in filters and 'name' not in filters and search is not None:
+            elif 'species' in filters and 'race' not in filters and 'name' not in filters:
                 animals = Animal.objects.search_only_species(search)
             
-            elif 'name' in filters and 'race' in filters and 'species' not in filters and search is not None:
+            elif 'name' in filters and 'race' in filters and 'species' not in filters:
                 animals = Animal.objects.search_only_name_and_race(search)
                 
-            elif 'name' in filters and 'race' not in filters and 'species' in filters and search is not None:
+            elif 'name' in filters and 'race' not in filters and 'species' in filters:
                 animals = Animal.objects.search_only_name_and_species(search)
                 
-            elif 'race' in filters and 'name' not in filters and 'species' in filters and search is not None:
+            elif 'race' in filters and 'name' not in filters and 'species' in filters:
                 animals = Animal.objects.search_only_race_and_species(search)
-                
-            elif 'species' in filters and 'race' in filters and 'name' in filters and search is not None:
-                animals = Animal.objects.search_only_name_race_and_species(search)
+
+        elif search is not None:
+            animals = Animal.objects.search_only_name_race_and_species(search)
+
+        if state_list is not None:
+            state = state_list.split('_')
             return animals.filter(status_request__in=state)
         return animals
 
