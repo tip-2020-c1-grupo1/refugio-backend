@@ -3,7 +3,14 @@ from rest_api.services.profile import ProfileService
 from rest_api.models.adoption import AdoptionRequest
 from rest_api.services.refugio_event import RefugioEventService
 
-REQUESTED = 'STA'
+AVAILABLE = 'Disponible'
+REQUESTED = 'Solicitado'
+WAIT_LIST = 'En espera'
+ACCEPTED = 'Aceptado'
+REJECTED = 'Rechazado'
+ON_HOLD = 'En revisión'
+ADOPTED = 'Adoptado',
+REMOVED = 'Eliminado'
 
 
 class AdoptionRequestService(object):
@@ -23,3 +30,10 @@ class AdoptionRequestService(object):
                 status=REQUESTED, potencial_adopter=profile, animal=animal)
         RefugioEventService.create_adoption_request_event(profile, animal)
         return adoption_request, False
+
+    @staticmethod
+    def remove_adoption_for_user(email, pk):
+        adoption_request = AdoptionRequest.objects.get(animal_id=pk)
+        adoption_request.status = REMOVED
+        adoption_request.save()
+        RefugioEventService.modify_adoption_request_event(adoption_request, email)

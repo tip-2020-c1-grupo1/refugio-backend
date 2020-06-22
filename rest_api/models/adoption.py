@@ -18,6 +18,7 @@ ACCEPTED = 'Aceptado'
 REJECTED = 'Rechazado'
 ON_HOLD = 'En revisión'
 ADOPTED = 'Adoptado'
+REMOVED = 'Eliminado'
 
 TYPES_OF_REQUEST_CHOICES = [
     (AVAILABLE, 'Disponible'),
@@ -27,6 +28,7 @@ TYPES_OF_REQUEST_CHOICES = [
     (REJECTED, 'Rechazado'),
     (ON_HOLD, 'En revisión'),
     (ADOPTED, 'Adoptado'),
+    (REMOVED, 'Eliminado'),
 ]
 
 

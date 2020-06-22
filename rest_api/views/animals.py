@@ -1,4 +1,6 @@
 from rest_framework import generics, viewsets
+
+from rest_api.models.adoption import AdoptionRequest
 from rest_api.models.animals import Animal, ImageAnimal
 from rest_api.serializers.animals import AnimalSerializer, ImageSerializerSimple
 
@@ -13,6 +15,8 @@ class AnimalViewSet(viewsets.ReadOnlyModelViewSet):
         search = self.request.query_params.get('search', None)
         filter_elem = self.request.query_params.get('filter', None)
         state_list = self.request.query_params.get('state', None)
+        user_email = self.request.query_params.get('user', None)
+        requester = self.request.query_params.get('requester', None)
         animals = Animal.objects.all()
 
         if filter_elem is not None and search is not None:
@@ -42,7 +46,16 @@ class AnimalViewSet(viewsets.ReadOnlyModelViewSet):
 
         if state_list is not None:
             state = state_list.split('_')
-            return animals.filter(status_request__in=state)
+            animals = animals.filter(status_request__in=state)
+
+        if user_email is not None:
+
+            animals = animals.filter(owner__user__email=user_email)
+
+        elif requester is not None:
+            adoption_requests = AdoptionRequest.objects.filter(potencial_adopter__user__email=requester).exclude(status__in=['Adoptado', 'En revisión', 'Eliminado'])
+            animals = animals.filter(adoption_requests_for_animal__in=adoption_requests)
+
         return animals
 
 

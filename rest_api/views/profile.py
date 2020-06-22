@@ -11,6 +11,20 @@ class ProfileViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
+    @action(detail=True, methods=['get'])
+    def get_colaborations(self, request, pk=None):
+        filter_elem = self.request.query_params.get('name', None)
+        if filter_elem is not None:
+            return ProfileService.filter_colaborators(pk, filter_elem)
+        return ProfileService.get_colaborations_for(pk)
+
+    @action(detail=True, methods=['get'])
+    def get_adoption_request(self, request, pk=None):
+        filter_elem = self.request.query_params.get('status', None)
+        if filter_elem is not None:
+            return ProfileService.filter_adoption_request(pk, filter_elem)
+        return ProfileService.get_adoption_request_for(pk)
+
     @action(detail=False, methods=['post'])
     def update_profile(self, request):
         data = request.data

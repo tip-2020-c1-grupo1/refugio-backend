@@ -317,27 +317,5 @@
       "animal": 6,
       "image": "ferret5.jpg"
     }
-  },
-  {
-    "model": "rest_api.colaboration",
-    "pk": 1,
-    "fields": {
-      "name": "Alimento para gatos",
-      "short_description": "Gente que done alimento para gatos",
-      "description": "Gente que alcance alimento para gatos adultos",
-      "date_modified": "2019-04-03",
-      "date_created": "2019-04-03"
-    }
-  },
-  {
-    "model": "rest_api.colaboration",
-    "pk": 2,
-    "fields": {
-      "name": "Despachar alimentos",
-      "short_description": "Delivery de alimento",
-      "description": "Delivery que alcance alimento por zonas donde no podemos llegar",
-      "date_modified": "2019-04-03",
-      "date_created": "2019-04-03"
-    }
   }
 ]

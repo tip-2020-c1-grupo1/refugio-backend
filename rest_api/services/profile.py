@@ -27,6 +27,31 @@ class ProfileService(object):
         return Profile.objects.get_by_email(email)
 
     @staticmethod
+    def get_colaborations_for(pk):
+        profile = Profile.objects.get(pk=pk)
+        return profile.colaboration_set.all()
+
+    @staticmethod
+    def filter_colaborators(pk, name):
+        profile = Profile.objects.get(pk=pk)
+        return profile.colaboration_set.filter(name=name)
+
+    @staticmethod
+    def filter_colaborators(pk, name):
+        profile = Profile.objects.get(pk=pk)
+        return profile.colaboration_set.filter(name=name)
+
+    @staticmethod
+    def get_adoption_request(pk):
+        from rest_api.models.adoption import AdoptionRequest
+        return AdoptionRequest.objects.filter(potencial_adopter_id=pk)
+
+    @staticmethod
+    def filter_adoption_request(pk, status):
+        from rest_api.models.adoption import AdoptionRequest
+        return AdoptionRequest.objects.filter(potencial_adopter_id=pk, status=status)
+
+    @staticmethod
     def prepare_profile(data):
         user = User.objects.filter(email=data['email']).first()
         if user is None:

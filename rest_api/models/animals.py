@@ -79,5 +79,9 @@ def create_animal(sender, instance, created, **kwargs):
     print(instance.__dict__)
     if created:
         TimelineService.create_initial_timeline(animal=instance)
-        instance.vaccination_plan = instance.species.default_vaccination_plan
-        instance.save()
+        if instance.species is not None:
+            instance.vaccination_plan = instance.species.default_vaccination_plan
+            instance.save()
+        else:
+            instance.vaccination_plan = 'Te vino vacio'
+            instance.save()

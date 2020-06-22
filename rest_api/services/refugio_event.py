@@ -9,6 +9,7 @@ ACCEPTED = 'Aceptado'
 REJECTED = 'Rechazado'
 ON_HOLD = 'En revisión'
 ADOPTED = 'Adoptado'
+REMOVED = 'Eliminado'
 
 TYPES_OF_REQUEST_CHOICES = {
     REGISTERED: 'Registrado',
@@ -19,6 +20,7 @@ TYPES_OF_REQUEST_CHOICES = {
     REJECTED: 'Rechazado',
     ON_HOLD: 'En revisión',
     ADOPTED: 'Adoptado',
+    REMOVED: 'Eliminado'
 }
 
 
@@ -78,8 +80,9 @@ class RefugioEventService(object):
         description = animal.name + ' cuya solicitud fue iniciada por el usuario cuyo mail es: '
         description += email + ' paso a estar ' + status
 
-        animal.status_request = status
-        animal.save()
+        if status is 'Adoptado' or status is 'Disponible':
+            animal.status_request = status
+            animal.save()
 
         return RefugioEvent.objects.create(
             title=status.upper(),

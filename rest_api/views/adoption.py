@@ -15,6 +15,18 @@ class AdoptionViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = AdoptionRequest.objects.all()
 
     @action(detail=False, methods=['post'])
+    def remove_adoption_for_user(self, request):
+        data = request.data
+        if 'email' not in data:
+            content = {'Error': 'Falta ingresar usuario'}
+            return Response(content, status=status.HTTP_404_NOT_FOUND)
+        if 'animal_pk' not in data:
+            content = {'Error': 'Falta ingresar animal'}
+            return Response(content, status=status.HTTP_404_NOT_FOUND)
+        AdoptionRequestService.remove_adoption_for_user(data['email'], data['animal_pk'])
+        return Response({'Ok': 'Se borro su solicitud de adopción con exito'}, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['post'])
     def request_adoption(self, request):
         data = request.data
         if 'email' not in data or 'animal_pk' not in data:

@@ -15,6 +15,18 @@ class ColaborationRequestService(object):
         return colab.save()
 
     @staticmethod
+    def remove_colaboration(email, pk):
+        profile = ProfileService.get_by_email(email)
+        colab = Colaboration.objects.get(pk=pk)
+        colab.colaborators.remove(profile)
+        colab.save()
+
+        colab.satisfied = colab.colaborators.count() == colab.required_colaborators
+        if not colab.satisfied:
+            colab.status_request = 'Disponible'
+        return colab.save()
+
+    @staticmethod
     def is_satisfied(colab_pk):
         colab = Colaboration.objects.get(pk=colab_pk)
         return colab.satisfied
