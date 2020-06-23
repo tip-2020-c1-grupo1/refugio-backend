@@ -67,9 +67,9 @@ SUPER_USER = {
 }
 
 MP_URLS = {
-        'success': 'http://herokuUrl/donacion',
-        'pending': 'http://herokuUrl/donacion',
-        'failure': 'http://herokuUrl/donacion'
+        'success': 'http://refugio-frontend.herokuapp.com/donacion',
+        'pending': 'http://refugio-frontend.herokuapp.com/donacion',
+        'failure': 'http://refugio-frontend.herokuapp.com/donacion'
 }
 
 django_heroku.settings(locals())
