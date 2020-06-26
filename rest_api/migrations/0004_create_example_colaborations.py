@@ -26,6 +26,7 @@ def forwards_func(apps, schema_editor):
     Colaboration.objects.get_or_create(name='Alimento para perros', short_description=dog_short, description=dog_long)
     Colaboration.objects.get_or_create(name='Translado de gatos', short_description=cat_short, description=cat_long)
 
+
 def reverse_func(apps, schema_editor):
     # destroy what forward_func builds
     pass

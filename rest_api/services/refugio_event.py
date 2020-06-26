@@ -71,7 +71,8 @@ class RefugioEventService(object):
         timeline = Timeline.objects.get(animal=animal)
         animal = timeline.animal
         animal_pk = str(animal.pk)
-        email = adoption_request.potencial_adopter.user.email
+        potencial_adopter = adoption_request.potencial_adopter
+        email = potencial_adopter.user.email
         status = TYPES_OF_REQUEST_CHOICES[adoption_request.status]
         metadata = str({'animal': animal_pk, 'adopter_email': email,
                         'requested_by': requester_email,
@@ -82,6 +83,8 @@ class RefugioEventService(object):
 
         if status is 'Adoptado' or status is 'Disponible':
             animal.status_request = status
+            if status is 'Adoptado':
+                animal.owner = potencial_adopter
             animal.save()
 
         return RefugioEvent.objects.create(
