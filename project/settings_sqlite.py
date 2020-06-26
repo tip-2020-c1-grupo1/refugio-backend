@@ -49,7 +49,7 @@ if 'test' in sys.argv:
 
 """
 REQUERED FOR https://vxlabs.com/2015/12/08/gunicorn-as-your-django-development-server/
-SETUP GUNICORN + DJ-STATIC 
+SETUP GUNICORN + DJ-STATIC
 
 ALSO CHECK: https://github.com/heroku-python/dj-static
 
@@ -60,3 +60,9 @@ STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 MEDIA_ROOT = 'media'
 MEDIA_URL = '/media/'
+
+MP_URLS = {
+        'success': 'http://localhost:3000/donacion',
+        'pending': 'http://localhost:3000/donacion',
+        'failure': 'http://localhost:3000/donacion'
+}
