@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'rest_framework.authtoken',
     'django_admin_listfilter_dropdown',
+    'markdownx',
+    'ckeditor',
     'rest_api',
     'watchman',
 ]
@@ -89,6 +91,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/'
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
 
 # Internationalization

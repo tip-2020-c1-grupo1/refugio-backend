@@ -6,8 +6,8 @@ from django.dispatch import receiver
 
 from rest_api.managers.animals import AnimalManager
 from rest_api.models.profile import Profile
-
-
+from ckeditor.fields import RichTextField
+from markdownx.models import MarkdownxField
 import logging
 
 # Get an instance of a logger
@@ -20,8 +20,7 @@ AVAILABLE = 'Disponible'
 
 class AnimalSpecie(models.Model):
     name = models.TextField(blank=True, null=True, verbose_name='Especie')
-    default_vaccination_plan = models.TextField(blank=True, null=True,
-                                                verbose_name='Plan vacunatorio por default')
+    default_vaccination_plan = RichTextField(verbose_name='Plan vacunatorio por default')
 
     def __str__(self):
         return self.name
@@ -48,7 +47,9 @@ class Animal(models.Model):
         on_delete=models.CASCADE, blank=True, null=True, verbose_name='Dueño')
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
-    vaccination_plan = models.TextField(blank=True, null=True, verbose_name='Plan vacunatorio')
+
+    vaccination_plan = RichTextField(verbose_name='Plan vacunatorio')
+    #models.TextField(blank=True, null=True, verbose_name='Plan vacunatorio')
     objects = AnimalManager()
 
     def especie_animal(self):

@@ -1,3 +1,5 @@
+from ckeditor.widgets import CKEditorWidget
+from django import forms
 from django.contrib import admin
 from django.db import models
 from django.utils.safestring import mark_safe
@@ -99,15 +101,21 @@ class InlineImage(admin.TabularInline):
     extra = 0
 
 
+class AnimalAdminForm(forms.ModelForm):
+    class Meta:
+        model = Animal
+        fields = '__all__'
+
+
 class AnimalAdmin(admin.ModelAdmin):
     inlines = [InlineImage]
     list_display = ('name', 'race', 'especie_animal')
+    form = AnimalAdminForm
     list_filter = (
         ('name', DropdownFilter),
         ('species__name', DropdownFilter),
         ('race', DropdownFilter),
     )
-
 
 class AdoptionRequestAdmin(admin.ModelAdmin):
     list_display = ('pk', 'status', 'animal_solicitado', 'potencial_adoptante')
