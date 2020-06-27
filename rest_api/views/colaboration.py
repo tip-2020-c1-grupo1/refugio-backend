@@ -1,5 +1,5 @@
 from rest_framework import status, viewsets
-from rest_api.models.colaboration import Colaboration
+from rest_api.models.colaboration import Colaboration, ColaborationColaborators
 from rest_api.serializers.colaboration import ColaborationSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -21,7 +21,8 @@ class ColaborationViewSet(viewsets.ReadOnlyModelViewSet):
         if user_email is not None:
             from rest_api.models.profile import Profile
             profile = Profile.objects.get(user__email=user_email)
-            base_queryset = base_queryset.filter(colaborators=profile)
+            colaborations_colaborators = ColaborationColaborators.objects.filter(colaborator=profile)
+            base_queryset = base_queryset.filter(colaboration_colab__in=colaborations_colaborators)
         if search is not None:
             base_queryset = base_queryset.filter(status_request=search)
         return base_queryset

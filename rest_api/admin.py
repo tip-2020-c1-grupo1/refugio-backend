@@ -6,7 +6,7 @@ from rest_framework.authtoken.models import Token
 
 from rest_api.models.adoption import AdoptionRequest
 from rest_api.models.animals import Animal, ImageAnimal, AnimalSpecie
-from rest_api.models.colaboration import Colaboration
+from rest_api.models.colaboration import Colaboration, ColaborationColaborators
 from rest_api.models.complaint import Complaint
 from rest_api.models.profile import Profile
 from django.contrib.auth.models import User, Permission
@@ -15,6 +15,7 @@ from django_admin_listfilter_dropdown.filters import DropdownFilter, ChoiceDropd
 
 from rest_api.models.refugio_event import RefugioEvent
 from rest_api.models.timeline import Timeline
+from rest_api.services.colaboration import ColaborationRequestService
 from rest_api.services.refugio_event import RefugioEventService
 
 
@@ -31,7 +32,7 @@ class ProfileInline(admin.StackedInline):
 
 
 class CustomUserAdmin(UserAdmin):
-    inlines = (ProfileInline, )
+    inlines = (ProfileInline,)
 
     def get_fieldsets(self, request, obj=None):
         if request.user.is_superuser:
@@ -114,7 +115,7 @@ class AdoptionRequestAdmin(admin.ModelAdmin):
     list_filter = (
         ('status', ChoiceDropdownFilter),
         ('potencial_adopter__user__email', DropdownFilter),
-        ('animal__species__name', DropdownFilter), # adopter_requests
+        ('animal__species__name', DropdownFilter),  # adopter_requests
         ('animal__name', DropdownFilter),
         ('animal__race', DropdownFilter),
     )
@@ -160,9 +161,22 @@ class TimelineAdmin(admin.ModelAdmin):
         return super(TimelineAdmin, self).get_queryset(request).prefetch_related('animal')
 
 
+class InlineColaborationColaborators(admin.TabularInline):
+    model = ColaborationColaborators
+    extra = 0
+
+
 class ColaborationAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name')
-    filter_horizontal = ('colaborators',)
+    # filter_horizontal = ('colaborators',)
+    inlines = (InlineColaborationColaborators,)
+
+    def save_formset(self, request, form, formset, change):
+        formset.save()
+        for f in formset.forms:
+            obj = f.instance
+            colaboration = Colaboration.objects.get(pk=obj.colaboration_id)
+            ColaborationRequestService.change_status_colaboration(colaboration)
 
 
 admin.site.site_header = "Refugio App Backoffice"
@@ -176,6 +190,7 @@ admin.site.register(Permission)
 admin.site.register(Complaint)
 admin.site.register(RefugioEvent, RefugioEventAdmin)
 admin.site.register(Colaboration, ColaborationAdmin)
+admin.site.register(ColaborationColaborators)
 admin.site.register(Timeline, TimelineAdmin)
 admin.site.register(Animal, AnimalAdmin)
 admin.site.register(AnimalSpecie)

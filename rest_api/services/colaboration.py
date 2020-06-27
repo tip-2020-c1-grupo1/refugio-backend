@@ -1,5 +1,6 @@
-from rest_api.models.colaboration import Colaboration
+from rest_api.models.colaboration import Colaboration, ColaborationColaborators
 from rest_api.services.profile import ProfileService
+
 
 class ColaborationRequestService(object):
 
@@ -7,24 +8,28 @@ class ColaborationRequestService(object):
     def add_colaboration(email, colab_pk):
         profile = ProfileService.get_by_email(email)
         colab = Colaboration.objects.get(pk=colab_pk)
-        colab.colaborators.add(profile)
-        colab.save()
-        colab.satisfied = colab.colaborators.count() == colab.required_colaborators
-        if colab.satisfied:
-            colab.status_request = 'Reservado'
-        return colab.save()
+        ColaborationColaborators.objects.create(colaborator=profile, colaboration=colab)
 
     @staticmethod
     def remove_colaboration(email, pk):
         profile = ProfileService.get_by_email(email)
         colab = Colaboration.objects.get(pk=pk)
-        colab.colaborators.remove(profile)
-        colab.save()
+        to_remove = ColaborationColaborators.objects.get(colaborator=profile, colaboration=colab)
+        to_remove.delete()
+        ColaborationRequestService.change_status_colaboration(colab)
 
-        colab.satisfied = colab.colaborators.count() == colab.required_colaborators
-        if not colab.satisfied:
-            colab.status_request = 'Disponible'
-        return colab.save()
+    @staticmethod
+    def change_status_colaboration(colaboration):
+        others = ColaborationColaborators.objects.filter(colaboration=colaboration).filter(
+            status_request=Colaboration.CONFIRMED)
+        satisfied = colaboration.required_colaborators == others.count()
+        if satisfied:
+            colaboration.satisfied = satisfied
+            colaboration.status_request = Colaboration.CONFIRMED
+        else:
+            colaboration.satisfied = satisfied
+            colaboration.status_request = Colaboration.AVAILABLE
+        colaboration.save()
 
     @staticmethod
     def is_satisfied(colab_pk):
