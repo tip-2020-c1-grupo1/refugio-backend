@@ -18,8 +18,8 @@ class RefugioEvent(models.Model):
         related_name='refugio_events_reported',
         on_delete=models.CASCADE, blank=True, null=True, verbose_name='Personal del refugio')
     metadata = models.TextField(blank=True, null=True, verbose_name='Metadata')
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True)
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name='Fecha creación')
+    date_modified = models.DateTimeField(auto_now=True, verbose_name='Fecha modificación')
 
     def cambio_realizado_por(self):
         return self.reported_by.user.email if self.reported_by else ''

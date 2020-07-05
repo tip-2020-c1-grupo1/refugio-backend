@@ -12,6 +12,9 @@ class Timeline(models.Model):
     def animal_asociado(self):
         return str(self.animal.pk) + ' - ' + self.animal.name
 
+    def __str__(self):
+        return 'Linea del tiempo de ' + self.animal.name
+
     class Meta:
         verbose_name_plural = "Lineas del tiempo de animales"
         verbose_name = "Linea del tiempo para animal"

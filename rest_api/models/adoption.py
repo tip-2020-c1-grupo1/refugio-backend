@@ -39,7 +39,7 @@ class AdoptionRequest(models.Model):
 
     potencial_adopter = models.ForeignKey(Profile,
                                           related_name='adopter_requests',
-                                          on_delete=models.CASCADE, blank=True, null=True, verbose_name='Profile')
+                                          on_delete=models.CASCADE, blank=True, null=True, verbose_name='Usuario adoptante')
 
     status = models.CharField(
         max_length=30,
@@ -48,6 +48,9 @@ class AdoptionRequest(models.Model):
         verbose_name='Estado de petición'
     )
     objects = AdoptionRequestManager()
+
+    def __str__(self):
+        return 'Solicitud por ' + self.animal.name + " por: " + self.potencial_adopter.user.username
 
     def animal_solicitado(self):
         animal = self.animal

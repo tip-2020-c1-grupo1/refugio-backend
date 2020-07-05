@@ -40,6 +40,7 @@ class Profile(models.Model):
 
     class Meta:
         verbose_name_plural = "Perfiles"
+        verbose_name = "Perfil"
 
 
 @receiver(post_save, sender=Profile)

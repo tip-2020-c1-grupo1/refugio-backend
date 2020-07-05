@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from rest_api.models.adoption import AdoptionRequest
 from rest_api.models.animals import Animal, ImageAnimal, AnimalSpecie
 from rest_api.serializers.adoption import AdoptionRequestColaboratorsSerializer
 
@@ -11,7 +13,7 @@ class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         """Map this serializer to a model and their fields."""
         model = ImageAnimal
-        fields = ('id','image' ,'animal')
+        fields = ('id', 'image', 'animal')
 
 
 class ImageSerializerSimple(serializers.ModelSerializer):
@@ -36,7 +38,16 @@ class AnimalSerializer(serializers.ModelSerializer):
     """Serializer to map the model instance into json format."""
     images = ImageSerializerSimple(many=True, required=False)
     specie = serializers.CharField(read_only=True, source="species.name")
-    requesters = AdoptionRequestColaboratorsSerializer(read_only=True, many=True, source="adoption_requests_for_animal")
+    requesters = serializers.SerializerMethodField()
+    """
+    requesters = AdoptionRequestColaboratorsSerializer(read_only=True,
+                                                       many=True,
+                                                       source="adoption_requests_for_animal")
+    """
+    def get_requesters(self, obj):
+        adoption_requests = obj.adoption_requests_for_animal.exclude(
+            status__in=['Adoptado', 'En revisión', 'Eliminado'])
+        return AdoptionRequestColaboratorsSerializer(adoption_requests, many=True).data
 
     class Meta:
         """Map this serializer to a model and their fields."""

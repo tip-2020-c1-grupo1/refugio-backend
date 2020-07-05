@@ -1,7 +1,10 @@
+import csv
+
 from ckeditor.widgets import CKEditorWidget
 from django import forms
 from django.contrib import admin
 from django.db import models
+from django.http import HttpResponse
 from django.utils.safestring import mark_safe
 from django.contrib.admin.widgets import AdminFileWidget
 from rest_framework.authtoken.models import Token
@@ -21,6 +24,25 @@ from rest_api.services.colaboration import ColaborationRequestService
 from rest_api.services.refugio_event import RefugioEventService
 
 
+class ExportCsvMixin:
+    def export_as_csv(self, request, queryset):
+
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([getattr(obj, field) for field in field_names])
+
+        return response
+
+    export_as_csv.short_description = "Export Selected"
+
+
 class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
@@ -33,8 +55,9 @@ class ProfileInline(admin.StackedInline):
         return request.user.is_superuser
 
 
-class CustomUserAdmin(UserAdmin):
+class CustomUserAdmin(UserAdmin, ExportCsvMixin):
     inlines = (ProfileInline,)
+    actions = ["export_as_csv"]
 
     def get_fieldsets(self, request, obj=None):
         if request.user.is_superuser:
@@ -107,7 +130,7 @@ class AnimalAdminForm(forms.ModelForm):
         fields = '__all__'
 
 
-class AnimalAdmin(admin.ModelAdmin):
+class AnimalAdmin(admin.ModelAdmin, ExportCsvMixin):
     inlines = [InlineImage]
     list_display = ('name', 'race', 'especie_animal')
     form = AnimalAdminForm
@@ -116,6 +139,9 @@ class AnimalAdmin(admin.ModelAdmin):
         ('species__name', DropdownFilter),
         ('race', DropdownFilter),
     )
+    readonly_fields = ['status_request', ]
+    actions = ["export_as_csv"]
+
 
 class AdoptionRequestAdmin(admin.ModelAdmin):
     list_display = ('pk', 'status', 'animal_solicitado', 'potencial_adoptante')
@@ -142,6 +168,7 @@ class RefugioEventAdmin(admin.ModelAdmin):
     list_filter = (
         ('reported_by__user__email', DropdownFilter),
     )
+    readonly_fields = ['title', 'timeline']
 
     def lookup_allowed(self, lookup, value):
         return True
@@ -153,6 +180,15 @@ class RefugioEventAdmin(admin.ModelAdmin):
 class InlineRefugioEvent(admin.TabularInline):
     model = RefugioEvent
     extra = 0
+    readonly_fields = (
+        'title',
+        'description',
+        'timeline',
+        'reported_by',
+        'metadata',
+        'date_created',
+        'date_modified'
+    )
 
 
 class TimelineAdmin(admin.ModelAdmin):
@@ -161,6 +197,7 @@ class TimelineAdmin(admin.ModelAdmin):
     list_filter = (
         ('animal__name', DropdownFilter),
     )
+    readonly_fields = ('animal',)
 
     def lookup_allowed(self, lookup, value):
         return True
@@ -174,10 +211,15 @@ class InlineColaborationColaborators(admin.TabularInline):
     extra = 0
 
 
+class ColaborationColaboratorsAdmin(admin.ModelAdmin):
+    readonly_fields = ['colaborator', 'colaboration']
+
+
 class ColaborationAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name')
     # filter_horizontal = ('colaborators',)
     inlines = (InlineColaborationColaborators,)
+    readonly_fields = ['satisfied',  'status_request']
 
     def save_formset(self, request, form, formset, change):
         formset.save()
@@ -198,7 +240,7 @@ admin.site.register(Permission)
 admin.site.register(Complaint)
 admin.site.register(RefugioEvent, RefugioEventAdmin)
 admin.site.register(Colaboration, ColaborationAdmin)
-admin.site.register(ColaborationColaborators)
+admin.site.register(ColaborationColaborators, ColaborationColaboratorsAdmin)
 admin.site.register(Timeline, TimelineAdmin)
 admin.site.register(Animal, AnimalAdmin)
 admin.site.register(AnimalSpecie)

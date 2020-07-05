@@ -7,7 +7,6 @@ from django.dispatch import receiver
 from rest_api.managers.animals import AnimalManager
 from rest_api.models.profile import Profile
 from ckeditor.fields import RichTextField
-from markdownx.models import MarkdownxField
 import logging
 
 # Get an instance of a logger
@@ -24,6 +23,10 @@ class AnimalSpecie(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = "Especies de Animales"
+        verbose_name = "Especie de Animal"
 
 
 class Animal(models.Model):
@@ -45,11 +48,10 @@ class Animal(models.Model):
         Profile,
         related_name='animals',
         on_delete=models.CASCADE, blank=True, null=True, verbose_name='Dueño')
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True)
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name='Fecha creación')
+    date_modified = models.DateTimeField(auto_now=True, verbose_name='Fecha modificación')
 
     vaccination_plan = RichTextField(verbose_name='Plan vacunatorio')
-    #models.TextField(blank=True, null=True, verbose_name='Plan vacunatorio')
     objects = AnimalManager()
 
     def especie_animal(self):

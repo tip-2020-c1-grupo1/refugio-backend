@@ -33,7 +33,8 @@ class AdoptionRequestService(object):
 
     @staticmethod
     def remove_adoption_for_user(email, pk):
-        adoption_request = AdoptionRequest.objects.get(animal_id=pk)
+        adoption_request = AdoptionRequest.objects.exclude(
+            status__in=['Adoptado', 'En revisión', 'Eliminado']).get(animal_id=pk)
         adoption_request.status = REMOVED
         adoption_request.save()
         RefugioEventService.modify_adoption_request_event(adoption_request, email)
