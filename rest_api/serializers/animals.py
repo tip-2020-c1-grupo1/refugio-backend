@@ -52,6 +52,6 @@ class AnimalSerializer(serializers.ModelSerializer):
     class Meta:
         """Map this serializer to a model and their fields."""
         model = Animal
-        fields = ('id', 'name', 'requesters', 'description', 'vaccination_plan', 'status_request', 'specie', 'race', 'gender', 'owner', 'images','date_created', 'date_modified')
+        fields = ('id', 'name', 'requesters', 'description', 'long_description', 'vaccination_plan', 'status_request', 'specie', 'race', 'gender', 'owner', 'images','date_created', 'date_modified')
         read_only_fields = ('date_created', 'date_modified')
 
