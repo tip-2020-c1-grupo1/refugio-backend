@@ -34,7 +34,7 @@ class ColaborationViewSet(viewsets.ReadOnlyModelViewSet):
             content = {'Error': 'Falta ingresar usuario'}
             return Response(content, status=status.HTTP_404_NOT_FOUND)
         ColaborationRequestService.remove_colaboration(data['email'], pk)
-        return Response({'Ok': 'Se borró su colaboración con exito'}, status=status.HTTP_200_OK)
+        return Response({'Ok': 'Se borró su colaboración con éxito'}, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=['post'])
     def request_colab(self, request):
