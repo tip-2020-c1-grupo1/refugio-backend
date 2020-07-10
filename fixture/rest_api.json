@@ -57,7 +57,7 @@
     "pk": 2,
     "fields": {
       "name": "Ethel",
-      "species": 2,
+      "species": 3,
       "race": "Dos dedos",
       "description": "Es muy vago y duerme todo el día",
       "gender": "Macho",
@@ -110,7 +110,7 @@
     "pk": 3,
     "fields": {
       "name": "Zoe",
-      "species": 3,
+      "species": 2,
       "race": "N/A",
       "gender": "Hembra",
       "description": "Salta por todos lados y se esconde siempre",
@@ -216,7 +216,7 @@
     "pk": 5,
     "fields": {
       "name": "Garfield",
-      "species": 3,
+      "species": 2,
       "race": "N/A",
       "gender": "Macho",
       "description": "Le gusta la lazagna y dormir en una caja",
