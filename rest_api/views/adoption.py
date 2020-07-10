@@ -24,7 +24,7 @@ class AdoptionViewSet(viewsets.ReadOnlyModelViewSet):
             content = {'Error': 'Falta ingresar animal'}
             return Response(content, status=status.HTTP_404_NOT_FOUND)
         AdoptionRequestService.remove_adoption_for_user(data['email'], data['animal_pk'])
-        return Response({'Ok': 'Se borro su solicitud de adopción con exito'}, status=status.HTTP_200_OK)
+        return Response({'Ok': 'Se borró su solicitud de adopción con éxito'}, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=['post'])
     def request_adoption(self, request):
@@ -37,7 +37,7 @@ class AdoptionViewSet(viewsets.ReadOnlyModelViewSet):
 
         if was_created:
             content = {
-                'Error': 'Usted ya intento solicitar la adopción de este animal en el pasado, volveremos a contactarlo'}
+                'Error': 'Usted ya intentó solicitar la adopción de este animal en el pasado, volveremos a contactarlo'}
             return Response(content, status=status.HTTP_412_PRECONDITION_FAILED)
 
-        return Response({'Ok': 'Se creo la solicitud de adopción con exito'}, status=status.HTTP_200_OK)
+        return Response({'Ok': 'Se creó la solicitud de adopción con éxito'}, status=status.HTTP_200_OK)
