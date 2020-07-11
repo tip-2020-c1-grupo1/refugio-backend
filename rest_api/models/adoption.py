@@ -13,20 +13,14 @@ logger = logging.getLogger(__name__)
 
 AVAILABLE = 'Disponible'
 REQUESTED = 'Solicitado'
-WAIT_LIST = 'En espera'
-ACCEPTED = 'Aceptado'
 REJECTED = 'Rechazado'
-ON_HOLD = 'En revisión'
 ADOPTED = 'Adoptado'
 REMOVED = 'Eliminado'
 
 TYPES_OF_REQUEST_CHOICES = [
     (AVAILABLE, 'Disponible'),
     (REQUESTED, 'Solicitado'),
-    (WAIT_LIST, 'En espera'),
-    (ACCEPTED, 'Aceptado'),
     (REJECTED, 'Rechazado'),
-    (ON_HOLD, 'En revisión'),
     (ADOPTED, 'Adoptado'),
     (REMOVED, 'Eliminado'),
 ]

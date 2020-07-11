@@ -229,6 +229,10 @@ class ColaborationAdmin(admin.ModelAdmin):
             ColaborationRequestService.change_status_colaboration(colaboration)
 
 
+class ComplaintAdmin(admin.ModelAdmin):
+    model = Profile
+
+
 admin.site.site_header = "Refugio App Backoffice"
 admin.site.site_title = "Backoffice Portal"
 admin.site.index_title = "Bienvenidos a Refugio App"
@@ -237,7 +241,7 @@ admin.site.unregister(Token)
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Permission)
-admin.site.register(Complaint)
+admin.site.register(Complaint, ComplaintAdmin)
 admin.site.register(RefugioEvent, RefugioEventAdmin)
 admin.site.register(Colaboration, ColaborationAdmin)
 admin.site.register(ColaborationColaborators, ColaborationColaboratorsAdmin)

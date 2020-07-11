@@ -5,7 +5,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 from rest_api.views.adoption import AdoptionViewSet
 from rest_api.views.animal_specie import AnimalSpecieViewSet
-from rest_api.views.animals import AnimalViewSet
+from rest_api.views.animals import AnimalViewSet, AnimalViewSetAll
 from rest_api.views.colaboration import ColaborationViewSet
 from rest_api.views.complaint import ComplaintViewSet
 from rest_api.views.mercadopago import get_preference_id
@@ -14,6 +14,7 @@ from rest_api.views.refugio_event import RefugioEventViewSet
 from rest_api.views.timeline import TimelineViewSet
 
 router = routers.DefaultRouter()
+router.register(r'animals_all', AnimalViewSetAll, basename='AnimalAll')
 router.register(r'animals', AnimalViewSet, basename='Animal')
 router.register(r'profiles', ProfileViewSet, basename='User')
 router.register(r'users', UserReadOnlyView, basename='Profile')

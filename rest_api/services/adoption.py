@@ -5,10 +5,7 @@ from rest_api.services.refugio_event import RefugioEventService
 
 AVAILABLE = 'Disponible'
 REQUESTED = 'Solicitado'
-WAIT_LIST = 'En espera'
-ACCEPTED = 'Aceptado'
 REJECTED = 'Rechazado'
-ON_HOLD = 'En revisión'
 ADOPTED = 'Adoptado',
 REMOVED = 'Eliminado'
 

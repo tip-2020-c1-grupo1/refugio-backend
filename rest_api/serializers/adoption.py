@@ -20,4 +20,4 @@ class AdoptionRequestColaboratorsSerializer(serializers.ModelSerializer):
     class Meta:
         """Map this serializer to a model and their fields."""
         model = AdoptionRequest
-        fields = ('user',)
+        fields = ('user', 'status')
