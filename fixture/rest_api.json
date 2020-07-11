@@ -1,0 +1,320 @@
+[
+  {
+    "model": "rest_api.animal",
+    "pk": 1,
+    "fields": {
+      "name": "Brittany",
+      "species": 1,
+      "gender": "Hembra",
+      "race": "Bretón",
+      "description": "Brittany es hermosa y enérgica",
+      "date_modified": "2019-03-27",
+      "date_created": "2019-03-27"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 1,
+    "fields": {
+      "animal": 1,
+      "image": "bretona1.jpg"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 2,
+    "fields": {
+      "animal": 1,
+      "image": "bretona2.jpg"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 3,
+    "fields": {
+      "animal": 1,
+      "image": "bretona3.jpg"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 4,
+    "fields": {
+      "animal": 1,
+      "image": "bretona4.png"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 5,
+    "fields": {
+      "animal": 1,
+      "image": "bretona5.jpg"
+    }
+  },
+  {
+    "model": "rest_api.animal",
+    "pk": 2,
+    "fields": {
+      "name": "Ethel",
+      "species": 3,
+      "race": "Dos dedos",
+      "description": "Es muy vago y duerme todo el día",
+      "gender": "Macho",
+      "date_modified": "2019-03-31",
+      "date_created": "2019-03-31"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 6,
+    "fields": {
+      "animal": 2,
+      "image": "sloth1.jpg"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 7,
+    "fields": {
+      "animal": 2,
+      "image": "sloth2.jpg"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 8,
+    "fields": {
+      "animal": 2,
+      "image": "sloth3.jpg"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 9,
+    "fields": {
+      "animal": 2,
+      "image": "sloth4.jpg"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 10,
+    "fields": {
+      "animal": 2,
+      "image": "sloth5.jpg"
+    }
+  },
+  {
+    "model": "rest_api.animal",
+    "pk": 3,
+    "fields": {
+      "name": "Zoe",
+      "species": 2,
+      "race": "N/A",
+      "gender": "Hembra",
+      "description": "Salta por todos lados y se esconde siempre",
+      "date_modified": "2019-04-03",
+      "date_created": "2019-04-03"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 11,
+    "fields": {
+      "animal": 3,
+      "image": "gata1.jpg"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 12,
+    "fields": {
+      "animal": 3,
+      "image": "gata2.jpg"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 13,
+    "fields": {
+      "animal": 3,
+      "image": "gata3.jpg"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 14,
+    "fields": {
+      "animal": 3,
+      "image": "gata4.jpg"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 15,
+    "fields": {
+      "animal": 3,
+      "image": "gata5.jpg"
+    }
+  },
+  {
+    "model": "rest_api.animal",
+    "pk": 4,
+    "fields": {
+      "name": "Taimado",
+      "species": 1,
+      "race": "Galgo",
+      "gender": "Macho",
+      "description": "Corre muy rápido y come poco",
+      "date_modified": "2019-04-04",
+      "date_created": "2019-04-04"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 16,
+    "fields": {
+      "animal": 4,
+      "image": "galgo1.jpg"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 17,
+    "fields": {
+      "animal": 4,
+      "image": "galgo2.jpg"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 18,
+    "fields": {
+      "animal": 4,
+      "image": "galgo3.jpg"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 19,
+    "fields": {
+      "animal": 4,
+      "image": "galgo4.jpg"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 20,
+    "fields": {
+      "animal": 4,
+      "image": "galgo5.jpg"
+    }
+  },
+  {
+    "model": "rest_api.animal",
+    "pk": 5,
+    "fields": {
+      "name": "Garfield",
+      "species": 2,
+      "race": "N/A",
+      "gender": "Macho",
+      "description": "Le gusta la lazagna y dormir en una caja",
+      "date_modified": "2019-04-04",
+      "date_created": "2019-04-04"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 21,
+    "fields": {
+      "animal": 5,
+      "image": "garfield1.jpg"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 22,
+    "fields": {
+      "animal": 5,
+      "image": "garfield2.jpg"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 23,
+    "fields": {
+      "animal": 5,
+      "image": "garfield3.jpg"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 24,
+    "fields": {
+      "animal": 5,
+      "image": "garfield4.jpg"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 25,
+    "fields": {
+      "animal": 5,
+      "image": "garfield5.jpg"
+    }
+  },
+  {
+    "model": "rest_api.animal",
+    "pk": 6,
+    "fields": {
+      "name": "Ferris",
+      "species": 4,
+      "gender": "Macho",
+      "race": "N/A",
+      "description": "Hace muchos agujeros en la tierra, le gusta esconderse y jugar con otros animales",
+      "date_modified": "2019-04-04",
+      "date_created": "2019-04-04"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 26,
+    "fields": {
+      "animal": 6,
+      "image": "ferret1.jpg"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 27,
+    "fields": {
+      "animal": 6,
+      "image": "ferret2.jpg"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 28,
+    "fields": {
+      "animal": 6,
+      "image": "ferret3.png"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 29,
+    "fields": {
+      "animal": 6,
+      "image": "ferret4.jpg"
+    }
+  },
+  {
+    "model": "rest_api.imageAnimal",
+    "pk": 30,
+    "fields": {
+      "animal": 6,
+      "image": "ferret5.jpg"
+    }
+  }
+]
